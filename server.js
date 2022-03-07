@@ -4,8 +4,8 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded());
+//app.use(express.json());
+//app.use(express.urlencoded());
 
 const PORT = process.env.PORT || 5000; 
 app.set('port', (process.env.PORT || 5000));
@@ -25,6 +25,16 @@ const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url);
 client.connect();
+
+if (process.env.NODE_ENV === 'production') 
+    {
+      // Set static folder
+      app.use(express.static('frontend/build'));
+      app.get('*', (req, res) => 
+         {
+            res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+          });
+    }
 
 app.post('/api/addcard', async (req, res, next) =>
 {
@@ -67,6 +77,8 @@ app.post('/api/login', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+
+
 app.post('/api/searchcards', async (req, res, next) => 
 {
   // incoming: userId, search
@@ -78,15 +90,7 @@ app.post('/api/searchcards', async (req, res, next) =>
   const db = client.db();
   const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
   
-  if (process.env.NODE_ENV === 'production') 
-    {
-      // Set static folder
-      app.use(express.static('frontend/build'));
-      app.get('*', (req, res) => 
-         {
-            res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-          });
-    }
+  
 
   var _ret = [];
   for( var i=0; i<results.length; i++ )
