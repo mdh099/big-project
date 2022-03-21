@@ -30,17 +30,21 @@ function Login()
             const response = await fetch(buildPath('api/login'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
-            if( res.id <= 0 )
+            //---------------------------------------------------------------------------
+            if(res.userID <= 0)
             {
                 setMessage('User/Password combination incorrect');
             }
             else
-            {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
+            {                                             // Changed res.id to res.userID
+                var user = {username:res.username,id:res.userID, email:res.email}
+                // added next line for testing
+                console.log(user);
                 localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
                 window.location.href = '/cards';
             }
+            //------------------------------------------------------------------------
         }
         catch(e)
         {
