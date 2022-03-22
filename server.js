@@ -90,6 +90,32 @@ app.post('/api/registration', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+//NEW
+var mongoose = require('mongoose');
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+
+// Add Search Friend API
+app.post('/api/searchfriend', async (req, res, next) => 
+{
+  // Incoming: userID, 
+  // Outgoing: List of users excluding the current user and their friends
+  const { userId } = req.body;
+  
+  var error = '';
+
+  try
+  {
+    const db = mongoose.connection;
+    const result = db.collection('Users').insertOne(newUser);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  var ret = { error: error/*, userID:userID*/};
+  res.status(200).json(ret);
+});
 
 app.post('/api/addcard', async (req, res, next) =>
 {
