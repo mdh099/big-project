@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import '../Login.css';
+
 function Login()
 {
 
@@ -21,7 +23,7 @@ function Login()
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
-                setMessage('User/Password combination incorrect');
+                setMessage('Login Failed');
             }
             else
             {                                             // Changed res.id to res.userID
@@ -42,15 +44,37 @@ function Login()
     };
     return(
       <div id="loginDiv">
-        <form onSubmit={doLogin}>
-        <span id="inner-title">PLEASE SIGN IN</span><br />
-        <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
-        <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
 
-        <input type="submit" id="loginButton" class="buttons" value = "Do It"
-          onClick={doLogin} />
+        <form onSubmit={doLogin}>
+
+        <div class="grid-container">
+            <div class="userG">
+                <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} />
+            </div>
+            <div class="passG">
+                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
+            </div>
+            <div class="submG">
+                <input type="submit" id="loginButton" class="buttons" value = "▷"
+                onClick={doLogin} />
+            </div>
+        </div>
+
         </form>
+
+        <br/>
+        <br/>
+        <br/>
         <span id="loginResult">{message}</span>
+        <br/>
+        <br/>
+        <br/>
+        <createLnk id="inner-title">Create Account</createLnk>
+        <br/>
+        <br/>
+        <resetLnk id="inner-title">Reset Password</resetLnk>
+        <br/>
+        <br/>
      </div>
     );
 };
