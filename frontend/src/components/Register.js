@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../Register.css';
 
 function Register()
 {
@@ -23,6 +24,21 @@ function Register()
         }
     }
 
+    const gotoLogin = async event =>
+        {
+            event.preventDefault();
+            try
+            {
+                window.location.href = '/login';
+
+            }
+            catch(e)
+            {
+                console.log(e.toString());
+                return;
+            }
+        };
+
      const doRegister = async event => 
     {
         console.log("ATTEMPTING TO REGISTER");
@@ -42,7 +58,7 @@ function Register()
             console.log("PAST JSON STUFF");
             if( res.id <= 0 )
             {
-                setMessage('User/Password combination incorrect');
+                setMessage('Incorrect User/Password Combination');
             }
             else
             {
@@ -57,18 +73,36 @@ function Register()
             console.log(e.toString());
             return;
         }    
+
     };
     return(
       <div id="RegisterDiv">
         <form onSubmit={doRegister}>
-            <span id="inner-title">PLEASE FILL OUT ALL BOXES</span><br />
-            <input type="text" id="RegisterName" placeholder="Username" ref={(c) => RegisterName = c} /><br />
-            <input type="text" id="RegisterEmail" placeholder="Email" ref={(c) => RegisterEmail = c} /><br />
-            <input type="password" id="RegisterPassword" placeholder="Password" ref={(c) => RegisterPassword = c} />
+            <registey id="inner-title">REGISTER</registey><br />
 
-            <input type="submit" id="RegisterButton" className="buttons" value = "Sign Up" onClick={doRegister} />
+            <br/>
+            <div class="grid-container">
+                <div class="userG">
+                    <input type="text" id="RegisterName" placeholder="Username" ref={(c) => RegisterName = c} />
+                </div>
+                <div class="userG">
+                    <input type="text" id="RegisterEmail" placeholder="Email" ref={(c) => RegisterEmail = c} />
+                </div>
+                <div class="userG">
+                    <input type="password" id="RegisterPassword" placeholder="Password" ref={(c) => RegisterPassword = c} />
+                </div>
+            </div>
+            <br/>
+
+                <input type="submit" id="RegisterButton" className="buttons" value = "▷" onClick={doRegister} />
+
         </form>
         <span id="RegisterResult">{message}</span>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <loginLink id="gotoLoginLink" onClick={gotoLogin} >Have an account?</loginLink>
      </div>
     );
 };

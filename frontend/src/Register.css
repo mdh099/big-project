@@ -17,7 +17,16 @@ html {
   padding: 1px;
 }
 
-[id=loginName] {
+registey {
+    color: rgba(255, 255, 255, 0.69);
+    font-family: 'KoHo';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 47px;
+}
+
+[id=RegisterName] {
     font-family: 'KoHo';
     font-style: normal;
     font-weight: 300;
@@ -37,7 +46,7 @@ html {
     box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
 }
 
-[id=loginPassword] {
+[id=RegisterEmail] {
     font-family: 'KoHo';
     font-style: normal;
     font-weight: 300;
@@ -57,13 +66,33 @@ html {
     box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
 }
 
-[id=loginButton] {
+[id=RegisterPassword] {
     font-family: 'KoHo';
     font-style: normal;
     font-weight: 300;
     font-size: 36px;
     line-height: 47px;
     display: flex;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.69);
+    border: transparent;
+
+    width: 351px;
+    height: 58px;
+
+    background: #000000;
+    box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
+}
+
+[id=RegisterButton] {
+    font-family: 'KoHo';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 47px;
+
     align-items: center;
     text-align: center;
     background: transparent;
@@ -78,64 +107,19 @@ html {
     box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
 }
 
-[id=loginButton]:hover {
+[id=RegisterButton]:hover {
     color: #FFD706;
 }
 
-createLnk {
-    position: center;
-    width: 348px;
-    height: 48px;
-
-
+[id=gotoLoginLink] {
+    color: rgba(255, 255, 255, 0.69);
     font-family: 'KoHo';
     font-style: normal;
     font-weight: 300;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 47px;
-    text-align: center;
-
-    color: rgba(255, 255, 255, 0.69);
 }
 
-resetLnk {
-    position: center;
-    width: 348px;
-    height: 48px;
-
-
-    font-family: 'KoHo';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 30px;
-    line-height: 39px;
-    text-align: center;
-
-    color: rgba(255, 255, 255, 0.69);
-}
-
-span {
-    position: center;
-    width: 348px;
-    height: 48px;
-
-
-    font-family: 'VT323';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 30px;
-    line-height: 39px;
-    text-align: center;
-
-    color: #FFD706;
-    text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
-}
-
-form {
-    display:inline-block;
-    position: center;
-}
-
-createLnk:hover {
+[id=gotoLoginLink]:hover {
     color: #FFD706;
 }

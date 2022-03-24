@@ -1,5 +1,6 @@
 import React from 'react';
 import PageTitle from '../components/PageTitle';
+import '../HomePage.css';
 
 const HomePage = () =>
 {
@@ -38,8 +39,13 @@ const HomePage = () =>
       <div>
         <PageTitle />
         
+        <div/>
         <input type="button" id="GoToLoginPageBtn" className="buttons" value = "Login" onClick= {goToLogin} />
-        <br />
+
+        <div/>
+        <br/>
+        <br/>
+
         <input type="button" id="GoToRegisterPageBtn" className="buttons" value = "Register" onClick= {goToRegister} />
 
       </div>

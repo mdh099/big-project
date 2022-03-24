@@ -10,6 +10,21 @@ function Login()
     var loginPassword;
     const [message,setMessage] = useState('');
 
+    const gotoRegister = async event =>
+        {
+            event.preventDefault();
+            try
+            {
+                window.location.href = '/register';
+
+            }
+            catch(e)
+            {
+                console.log(e.toString());
+                return;
+            }
+        };
+
     const doLogin = async event => 
     {
         event.preventDefault();
@@ -54,7 +69,7 @@ function Login()
             <div class="passG">
                 <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
             </div>
-            <div class="submG">
+            <div class="emailG">
                 <input type="submit" id="loginButton" class="buttons" value = "▷"
                 onClick={doLogin} />
             </div>
@@ -69,7 +84,7 @@ function Login()
         <br/>
         <br/>
         <br/>
-        <createLnk id="inner-title">Create Account</createLnk>
+        <createLnk id="inner-title" onClick={gotoRegister}>Create Account</createLnk>
         <br/>
         <br/>
         <resetLnk id="inner-title">Reset Password</resetLnk>

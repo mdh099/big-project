@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=KoHo:ital@0;1&family=VT323&display=swap');
+
+body {
+    text-align: center;
+}
+
+[type=button] {
+    font-family: 'KoHo';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 47px;
+
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.69);
+    border: transparent;
+
+    width: 351px;
+    height: 58px;
+
+    background: #000000;
+    box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
+}
+
+[type=button]:hover {
+    color: #FFD706;
+}
