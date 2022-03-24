@@ -1,82 +1,76 @@
 require('express');
 require('mongodb');
 
+//Load user model
+const User = require("./models/user.js");
+
 exports.setApp = function(app, client){
-    // Adding Login API
-// Complete, returns userID and email. 
-app.post('/api/login', async (req, res, next) => 
-{
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
+
+  // Login
+  // Complete, returns userID and email. 
+  app.post('/api/login', async function(req, res, next)  
+  {
+    // incoming: login, password
+    // outgoing: id, firstName, lastName, error
 	
- var error = '';
+    var error = '';
 
-  const { login, password } = req.body;
+    const { login, password } = req.body;
+    
+    // Old mongodb query
+    //const db = client.db();
+    //const results = await db.collection('Users').find({Username:login,Password:password}).toArray();
 
-  const db = client.db();
-  const results = await db.collection('Users').find({Username:login,Password:password}).toArray();
+    const results = await User.findOne({ Username: login, Password: password });
 
-  var userID = -1;
-  var username = '';
-  var email = '';
+    var userID = -1;
+    var username = '';
+    var email = '';
 
-  if( results.length > 0 )
+    if(results)
+    {
+      userID = results.userID;
+      username = results.Username;
+      email = results.email;
+      // used to be userID = results[0]._id;
+    }
+    else
+    {
+      ret = {error:"Login/Password incorrect"};
+    }
+
+    var ret = { userID:userID, username:username, email: email, error:''};
+    res.status(200).json(ret);
+  });
+
+  // Registration
+  app.post('/api/registration', async function(req, res, next)  
   {
-    userID = results[0].userID;
-    username = results[0].Username;
-    email = results[0].email;
-    // used to be userID = results[0]._id;
-  }
+    // incoming: Username, Password, email, 
+    // (maybe not) outgoing: id, error 
+    const { login, password, email } = req.body;
 
-  var ret = { userID:userID, username:username, email: email, error:''};
-  res.status(200).json(ret);
-});
-
-// Adding registration API
-app.post('/api/registration', async (req, res, next) => 
-{
-  // incoming: Username, Password, email, 
-  // (maybe not) outgoing: id, error 
-  const { login, password, email } = req.body;
-
-  const newUser = {Username:login, Password:password, email:email};
+    const newUser = {Username:login, Password:password, email:email};
   
-  // var userID = -1;
-  var error = '';
+    // var userID = -1;
+    var error = '';
 
-  try
-  {
-    const db = client.db();
-    const result = db.collection('Users').insertOne(newUser);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
+    try
+    {
+      // Old mongodb query
+      //const db = client.db();
+      //const result = db.collection('Users').insertOne(newUser);
 
-  var ret = { error: error/*, userID:userID*/};
-  res.status(200).json(ret);
-});
+      const result = await User.create(newUser);
+    }
+    catch(e)
+    {
+      error = e.toString();
+    }
 
-app.post('/api/addcard', async (req, res, next) =>
-{
-  // incoming: userId, color
-  // outgoing: error
-  const { userId, card } = req.body;
-  const newCard = {Card:card,UserId:userId};
-  var error = '';
-  try
-  {
-    const db = client.db();
-    const result = db.collection('Cards').insertOne(newCard);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
+    var ret = { error: error/*, userID:userID*/};
+    res.status(200).json(ret);
+  });
 
 // Not complete. 
 // app.post('/api/editaccount', async (req, res, next) => 
@@ -125,6 +119,37 @@ app.post('/api/addcard', async (req, res, next) =>
 // });
 //
 
+// Add Friend
+app.post('/api/addfriend', async function(req, res, next)  
+{
+  // incoming: userID(current user), friendID(friend to add)
+  // (maybe not) outgoing: friendID(added friend) error
+  const { userID, friendID } = req.body;
+
+  var error = '';
+
+  const currentUser = await User.findOne({ userID:userID });
+  const friendToAdd = await User.findOne({ userID:friendID });
+
+  console.log(currentUser);
+  console.log(friendToAdd);
+
+  currentUser.Friends.push(friendToAdd);
+  currentUser.save();
+
+  var ret = { userID:friendID, error:''};
+  res.status(200).json(ret);
+});
+
+
+
+
+
+
+
+
+// Olds cards apis
+
 app.post('/api/searchcards', async (req, res, next) => 
 {
   // incoming: userId, search
@@ -146,5 +171,24 @@ app.post('/api/searchcards', async (req, res, next) =>
   
   var ret = {results:_ret, error:error};
   res.status(200).json(ret);
-});
+  });
+app.post('/api/addcard', async (req, res, next) =>
+  {
+    // incoming: userId, color
+    // outgoing: error
+    const { userId, card } = req.body;
+    const newCard = {Card:card,UserId:userId};
+    var error = '';
+    try
+    {
+      const db = client.db();
+      const result = db.collection('Cards').insertOne(newCard);
+    }
+    catch(e)
+    {
+      error = e.toString();
+    }
+    var ret = { error: error };
+    res.status(200).json(ret);
+  });
 }
