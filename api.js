@@ -141,7 +141,18 @@ app.post('/api/addfriend', async function(req, res, next)
   res.status(200).json(ret);
 });
 
+// Search for friends to add
+app.get('/api/searchfriends', async function(req, res, next)
+{
+  // incoming: userID(current user logged in)
+  const { userID } = req.body;
 
+  var error = '';
+
+  const users = await User.find();
+
+  console.log(users);
+});
 
 
 
