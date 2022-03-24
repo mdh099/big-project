@@ -20,12 +20,13 @@ app.use(bodyParser.json());
 //const url = 'mongodb+srv://jm:cop4331@cluster0.k1bed.mongodb.net/COP4331?retryWrites=true&w=majority';
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(url);
-client.connect();
+const mongoose = require("mongoose");
+mongoose.connect(url)
+  .then(() => console.log("Mongo DB connected"))
+  .catch(err => console.log(err));
 
 var api = require('./api.js');
-api.setApp(app, client);
+api.setApp( app, mongoose );
 
 if (process.env.NODE_ENV === 'production') 
     {
