@@ -5,13 +5,21 @@ import LoginPage from './pages/LoginPage';
 import CardPage from './pages/CardPage';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
+import AccountPage from './pages/AccountPage';
+import LeaderboardPage from './pages/LeaderboardPage';
+import FriendsPage from './pages/FriendsPage';
 
 function App() {
   return (
     <Router >
       <Switch>
+
         <Route path="/" exact>
           <HomePage />
+        </Route>
+
+        <Route path="/account" exact>
+          <AccountPage />
         </Route>
 
         <Route path="/login" exact>
@@ -24,6 +32,14 @@ function App() {
 
         <Route path="/cards" exact>
           <CardPage />
+        </Route>
+
+        <Route path="/leaderboard" exact>
+          <LeaderboardPage />
+        </Route>
+
+        <Route path="/friends" exact>
+          <FriendsPage />
         </Route>
 
         <Redirect to="/" />

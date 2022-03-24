@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=KoHo:ital@0;1&family=VT323&display=swap');
+
+body {
+    text-align: center;
+}
+
+l {
+    position: absolute;
+    width: 670px;
+    height: 138px;
+    left: 120px;
+    top: -10px;
+
+    font-family: 'KoHo';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 125px;
+
+    color: #FFD706;
+
+    text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+}
+
+z {
+    position: absolute;
+    width: 670px;
+    height: 138px;
+    left: 180px;
+    top: -10px;
+
+    font-family: 'KoHo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 125px;
+
+    color: #FFD706;
+
+    text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+}
+
+x {
+    position: absolute;
+    width: 670px;
+    height: 138px;
+    left: 480px;
+    top: -20px;
+
+    font-family: 'VT323';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 144px;
+    line-height: 144px;
+
+    color: #FFFFFF;
+
+    text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+}
