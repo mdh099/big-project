@@ -127,9 +127,9 @@ function AccountPageUI()
         accTab.style.background = "#E5E5E5";
         mailTab.style.background = "white";
 
-        mainBoxText.innerHTML  = "Username: User <br /><br />" +
+        mainBoxText.innerHTML  = "Username: " + username + " <br /><br />" +
                 "Password: ***** <br /><br />" +
-                "Email: email@mail.com <br /><br />" +
+                "Email: "+ email +" <br /><br />" +
                 "High Score: 99999 <br /><br />";
     };
 
