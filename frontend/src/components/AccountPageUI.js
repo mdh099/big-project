@@ -127,8 +127,7 @@ function AccountPageUI()
         accTab.style.background = "#E5E5E5";
         mailTab.style.background = "white";
 
-        mainBoxText.innerHTML  = "Username: " + username + " <br /><br />" +
-                "Password: ***** <br /><br />" +
+        mainBoxText.innerHTML  = "<br />Username: " + username + " <br /><br />" +
                 "Email: "+ email +" <br /><br />" +
                 "High Score: 99999 <br /><br />";
     };
@@ -161,12 +160,7 @@ function AccountPageUI()
         mainBoxText.innerHTML  = "Here we will change email";
     };
 
-    const doLogout = event => 
-    {
-        event.preventDefault();
-        localStorage.removeItem("user_data")
-        window.location.href = '/';
-    };  
+
     /*
         <div id="topGrayRect">
         <a href="/account">Account</a>
@@ -185,17 +179,18 @@ function AccountPageUI()
         <div id="AccountPageBody">
 
           <button type="button" id="accountAccBtn" class="accButtons" title="Account"
-          onClick={viewAccount}><c> Account </c> </button>
+          onClick={viewAccount}><c> Account</c> </button>
           <button type="button" id="accountchangePassBtn" class="accButtons" title="Change Password"
-          onClick={changePass}><d> Change Password </d> </button>
+          onClick={changePass}><d> Change Password</d> </button>
           <button type="button" id="accountchangeEmailBtn" class="accButtons" title="Change Email"
-          onClick={changeEmail} ><d> Change Email </d> </button>
+          onClick={changeEmail} ><e> Change Email</e> </button>
 
           <div id="accountMainBox">
             <div id = "mainBoxContent">
+                <br />
                 Username: {username} <br /><br />
-                Password: ***** <br /><br />
                 Email: {email} <br /><br />
+                Friends: 0 <br /><br />
                 High Score: 99999 <br /><br />
             </div>
           </div>

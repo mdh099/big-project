@@ -41,21 +41,15 @@ function Register()
 
      const doRegister = async event => 
     {
-        console.log("ATTEMPTING TO REGISTER");
         event.preventDefault();
         var obj = {login:RegisterName.value, password:RegisterPassword.value, email: RegisterEmail.value};
         var js = JSON.stringify(obj);
-        console.log("ATTEMPTING TO GO IN TRY");
         try
         {    
-            console.log("IN TRY");
             const response = await fetch(buildPath('api/registration'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-
-            console.log("AWAITING RESPONSE");
 
             var res = JSON.parse( await response.text());
 
-            console.log("PAST JSON STUFF");
             if( res.id <= 0 )
             {
                 setMessage('Incorrect User/Password Combination');

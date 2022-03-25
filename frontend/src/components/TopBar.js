@@ -18,9 +18,9 @@ const TopBar = () =>
 
     return(
         <div id="topGrayRect">
-               <a href="/account">Account</a>
-               <a href="/friends">Friends</a>
-               <a href="/leaderboard">Leaderboard</a>
+               <a href="/account" title="Account">Account</a>
+               <a href="/friends" title="Friends">Friends</a>
+               <a href="/leaderboard" title="Leaderboard">Leaderboard</a>
                <button type="button" id="logoutButton" class="buttons" onClick={doLogout} 
                title="Log Out"> Log Out </button>
           </div>
