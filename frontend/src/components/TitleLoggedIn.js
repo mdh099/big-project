@@ -4,11 +4,13 @@ import './PageTitle.css';
 function TitleLoggedIn()
 {
    return(
-     <>
-      <l id="a">A</l>
-      <z id="r">R&nbsp;</z>
-      <x id="ast">ASTEROIDS</x>
-     </>
+     <div id="titleLoggedInDiv">
+        <div id="titleLoggedInInner">
+             <l id="a">A</l>
+             <z id="r">R&nbsp;</z>
+             <x id="ast">ASTEROIDS</x>
+        </div>
+     </div>
    );
 };
 export default TitleLoggedIn;
