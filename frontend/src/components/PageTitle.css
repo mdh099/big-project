@@ -6,55 +6,69 @@ body {
 }
 
 l {
-    position: absolute;
+
     width: 670px;
-    height: 138px;
-    left: 120px;
+    height: 100%;
     top: -10px;
 
     font-family: 'KoHo';
     font-style: italic;
     font-weight: 400;
     font-size: 96px;
-    line-height: 125px;
+    line-height: 100%;
 
     color: #FFD706;
 
     text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+
+
 }
 
 z {
-    position: absolute;
+ 
     width: 670px;
-    height: 138px;
-    left: 180px;
+    height: 100%;
     top: -10px;
 
     font-family: 'KoHo';
     font-style: normal;
     font-weight: 400;
     font-size: 96px;
-    line-height: 125px;
+    line-height: 100%;
 
     color: #FFD706;
 
     text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+
 }
 
 x {
-    position: absolute;
+
     width: 670px;
-    height: 138px;
-    left: 480px;
+    height: 100%;
     top: -20px;
 
     font-family: 'VT323';
     font-style: normal;
     font-weight: 400;
     font-size: 144px;
-    line-height: 144px;
+    line-height: 100%;
 
     color: #FFFFFF;
 
     text-shadow: 0px 4px 4px rgba(255, 0, 0, 0.51);
+
+    
+}
+
+#titleLoggedInDiv{
+    height: 100px;
+    width: 100%;
+}
+
+#titleLoggedInInner{
+    height:100px;
+    width: 40%;
+    margin: 0 auto;
+    display: table;
 }
