@@ -1,6 +1,7 @@
 require('express');
 require('mongodb');
 
+const { findOneAndReplace } = require('./models/user.js');
 //Load user model
 const User = require("./models/user.js");
 
@@ -123,7 +124,7 @@ exports.setApp = function(app, client){
 app.post('/api/addfriend', async function(req, res, next)  
 {
   // incoming: userID(current user), friendID(friend to add)
-  // (maybe not) outgoing: friendID(added friend) error
+  // outgoing: friendID(added friend), error message
   const { userID, friendID } = req.body;
 
   var error = '';
@@ -131,27 +132,65 @@ app.post('/api/addfriend', async function(req, res, next)
   const currentUser = await User.findOne({ userID:userID });
   const friendToAdd = await User.findOne({ userID:friendID });
 
-  console.log(currentUser);
-  console.log(friendToAdd);
-
-  currentUser.Friends.push(friendToAdd);
+  currentUser.Friends.push(friendID);
   currentUser.save();
 
-  var ret = { userID:friendID, error:''};
+  var ret = { friendID:friendID, error:''};
+  res.status(200).json(ret);
+});
+
+// Delete Friend
+app.post('/api/deletefriend', async function(req, res, next)
+{
+  // incoming: userID(current user logged in), friendID(friend to delete)
+  // outgoing: friendID(deleted friend), error message
+  
+  const { userID, friendID } = req.body;
+
+  var error = '';
+
+  await User.findOneAndUpdate({userID:userID}, {$pull: {Friends:friendID}});
+
+  var ret = { friendID:friendID, error:''};
   res.status(200).json(ret);
 });
 
 // Search for friends to add
-app.get('/api/searchfriends', async function(req, res, next)
+app.post('/api/searchnewfriends', async function(req, res, next)
 {
   // incoming: userID(current user logged in)
+  // outgoing: users(list of all possible accounts for user to befriend), error message
+
   const { userID } = req.body;
 
   var error = '';
 
-  const users = await User.find();
+  const currentUser = await User.findOne( {userID: userID} );
 
-  console.log(users);
+  const friendsPlusUser = currentUser.Friends;
+  friendsPlusUser.push(userID);
+
+  const users = await User.find({ userID: { $nin: friendsPlusUser} });
+
+  var ret = {users, error:''};
+  res.status(200).json(ret);
+});
+
+// Search current friends
+app.post('/api/searchcurrentfriends', async function(req, res, next)
+{
+  // incoming: userID(current user logged in)
+  // outgoing currentFriends(user's friends), error message
+  const { userID } = req.body;
+
+  var error = '';
+
+  const currentUser = await User.findOne( {userID: userID} );
+
+  const currentFriends = await User.find( {userID: {$in: currentUser.Friends} } );
+
+  var ret = {currentFriends, error:''};
+  res.status(200).json(ret);
 });
 
 
