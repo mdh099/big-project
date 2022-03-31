@@ -73,52 +73,50 @@ exports.setApp = function(app, client){
     res.status(200).json(ret);
   });
 
-// Not complete. 
-// app.post('/api/editaccount', async (req, res, next) => 
-// {
-//   // incoming: Username, Password, email, 
-//   // (maybe not) outgoing: id, error 
-//   const { login, password, email } = req.body;
+  app.post('/api/editaccount', async (req, res, next) => 
+  {
+    var error = '';
   
-//   // Currently does not allow you to change your username. Only email, and password. 
-//   // var username = '';
-//   var newEmail = email;
-//   var newPassword = password;
-
-//   // const newUser = {Username:login, Password:password, email:email};
-//   const updatedUser = {Username:login, Password:password, email:email}; 
+    const { login, password, email } = req.body;
   
-//   // var userID = -1;
-//   var error = '';
-
-//   try 
-//   {
-//     const db = client.db();
-//     const result = await db.collection('Users').find({Username:login,Password:password}).toArray();
-//     result = updatedUser; 
-//   }
-//   catch(e)
-//   {
-//     error = e.toString();
-//   }
-
-//   if( results.length > 0 )
-//   {
-//     userID = results[0].userID;
-//     username = results[0].Username;
-//     email = results[0].email;
-//     // used to be userID = results[0]._id;
-//   }
-
-//   var ret = { userID:userID, username:username, email: email, error:''};
-//   res.status(200).json(ret);
-
-//   var ret = { error: error/*, userID:userID*/};
-
-//   // Now it neads to 
-//   res.status(200).json(ret);
-// });
-//
+    const filter = { Username: login };
+    const update = {Password: password, email: email};
+  
+    // // doc is the document before update was applied
+    let doc = await User.findOneAndUpdate(filter, update);
+    doc.Username; 
+    doc.Password;
+    doc.email;
+  
+    doc = await User.findOne(filter);
+    doc.Password; 
+    doc.email;
+  
+    var ret = { error: '' };
+    res.status(200).json(ret);
+  });
+  
+  app.post('/api/deleteaccount', async function(req, res, next)
+    {
+      // incoming: userID
+      // outgoing: error
+  
+      var error = '';
+  
+      const { userID } = req.body;
+  
+      User.findOneAndDelete({userID: userID}, function (err, doc) {
+        if (err){
+          console.log(err)
+        }
+        else{
+          //console.log("Deleted account"); 
+        }
+      });
+  
+      var ret = { error: '' };
+      res.status(200).json(ret);
+    });
 
 // Add Friend
 app.post('/api/addfriend', async function(req, res, next)  
