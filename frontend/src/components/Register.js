@@ -48,11 +48,11 @@ function Register()
         {    
             const response = await fetch(buildPath('api/registration'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-            var res = JSON.parse( await response.text());
+            var res = JSON.parse(await response.text());
 
-            if( res.id <= 0 )
+            if( res.error !== "" )
             {
-                setMessage('Incorrect User/Password Combination');
+                setMessage('Username Already In Use');
             }
             else
             {
@@ -80,10 +80,10 @@ function Register()
                     <input type="text" id="RegisterName" placeholder="Username" ref={(c) => RegisterName = c} />
                 </div>
                 <div class="userG">
-                    <input type="text" id="RegisterEmail" placeholder="Email" ref={(c) => RegisterEmail = c} />
+                    <input type="password" id="RegisterPassword" placeholder="Password" ref={(c) => RegisterPassword = c} />
                 </div>
                 <div class="userG">
-                    <input type="password" id="RegisterPassword" placeholder="Password" ref={(c) => RegisterPassword = c} />
+                    <input type="text" id="RegisterEmail" placeholder="Email" ref={(c) => RegisterEmail = c} />
                 </div>
             </div>
             <br/>
@@ -91,9 +91,10 @@ function Register()
                 <input type="submit" id="RegisterButton" className="buttons" value = "▷" onClick={doRegister} />
 
         </form>
+        <br/>
+        <br/>
+        <br/>
         <span id="RegisterResult">{message}</span>
-        <br/>
-        <br/>
         <br/>
         <br/>
         <loginLink id="gotoLoginLink" onClick={gotoLogin} >Have an account?</loginLink>
