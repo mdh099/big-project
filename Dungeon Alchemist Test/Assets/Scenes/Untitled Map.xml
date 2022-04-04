@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.1" dataversion="20210708">
+  <gridsize>300,300</gridsize>
+  <occluders>
+    <occluder>
+      <id>0</id>
+      <points>-785,1256,-785,314</points>
+    </occluder>
+    <occluder>
+      <id>1</id>
+      <points>-785,314,1728,314</points>
+    </occluder>
+    <occluder>
+      <id>2</id>
+      <points>157,1256,-785,1256</points>
+    </occluder>
+    <occluder>
+      <id>3</id>
+      <points>1728,1256,785,1256</points>
+    </occluder>
+    <occluder>
+      <id>4</id>
+      <points>1728,1256,1728,314</points>
+    </occluder>
+  </occluders>
+  <lights>
+    <light>
+      <id>0</id>
+      <position>1259,402</position>
+      <color>#FFFFE5BF</color>
+      <range>3.5,0.7142857,6.5,0.7692308</range>
+      <on />
+    </light>
+  </lights>
+</root>
