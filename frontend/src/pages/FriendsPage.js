@@ -1,7 +1,7 @@
 import React from 'react';
 import TitleLoggedIn from '../components/TitleLoggedIn';
 import LoggedInName from '../components/LoggedInName';
-import FriendsPageUI from '../components/LeaderboardPageUI';
+import FriendsPageUI from '../components/FriendsPageUI';
 import TopBar from '../components/TopBar';
 
 /*

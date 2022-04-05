@@ -1,0 +1,205 @@
+#usrSearchBar {
+	width: 40%;
+	height: 70%;
+	margin: auto;
+	background: #000000;
+	box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
+	padding: 0px;
+	padding-top: 0%;
+	position: absolute;
+
+	justify-content: center;
+	display: inline-flex; 
+    align-items: flex-start; 
+	height: 6%;
+	width: 65%;
+	top: 29%;
+	left: 17.5%;
+	border-radius: 10px;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: 30px;
+}
+
+#searchCurrBtn, #searchNewBtn{
+	justify-content: center;
+	display: inline-flex; 
+	height: 6%;
+	width: 19.5%;
+	top: 32%;
+	left: 30.25%;
+	border-radius: 0px;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: 2vw;
+	display: inline;
+}
+
+#searchNewBtn{
+	left: 50.25%;
+}
+
+#prevPageBtn, #nextPageBtn{
+	justify-content: center;
+	display: inline-flex; 
+	height: 6%;
+	width: 10%;
+	top: 80%;
+	left: 40%;
+	border-radius: 0px;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: 2vw;
+	display: inline;
+	visibility: hidden;
+}
+
+#nextPageBtn{
+	left: 50.5%;
+}
+
+#DivWithTable, #usersTable{
+	justify-content: center;
+	display: table inline; 
+    align-items: flex-start; 
+	height: 6%;
+	width: 80%;
+	top: 40%;
+	left: 10%;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: min(3vw, 25px);
+}
+
+.addFriendButton, .deleteFriendButton{
+	justify-content: center;
+	display: table inline; 
+    align-items: flex-start; 
+	height: 0px;
+	width: 80%;
+	top: 46%;
+	left: 6%;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: min(3vw, 25px);
+
+	background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: none;
+    outline: none;
+	width: fit-content;
+	height: 5%;
+	vertical-align: inherit;
+	font-size: 6%;
+	padding: 0;
+	margin: 0;
+	display: inline-flex;
+	text-align: right;
+	justify-content: center;
+	white-space: none;
+	padding-left: 2.5%;
+	padding-right: 0%;
+
+	height: fit-content;
+	line-height: 100%;
+	box-shadow: none;
+	margin:auto;
+	padding-bottom: none;
+	font-size: 25px;
+
+	visibility: hidden;
+}
+
+#plus2{
+	top: 50.2%;
+}
+
+#plus3{
+	top: 54.4%;
+}
+
+#plus4{
+	top: 58.6%;
+}
+
+#plus5{
+	top: 62.8%;
+}
+#plus6{
+	top: 67%;
+}
+
+#friendsPageBody{
+	background: pink;
+}
+
+table, th, td{
+	border: 1px solid white;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	text-align: left;
+	empty-cells: hide;
+	vertical-align:middle;
+}
+
+table{
+	border: 1px solid black;
+	background-color: black;
+}
+
+td{
+	line-height: 100%;
+}
+
+#nameTh, #secondTh{
+	width:80%;
+	text-align: left;
+}
+
+
+#prevPageBtn:hover, #nextPageBtn:hover, #searchCurrBtn:hover, #searchNewBtn:hover{
+	color: #FFD706;
+	cursor: pointer;
+}
+
+#deleteFriendBtn, #addFriendBtn{
+	background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: none;
+    outline: none;
+
+	width: fit-content;
+	height: 50%;
+	line-height: 50%;
+	vertical-align: inherit;
+
+	font-size: 60%;
+	padding: 0;
+	margin: 0;
+
+	display: inline-flex;
+	text-align: right;
+	justify-content: center;
+	white-space: pre-wrap;
+	box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);;
+	padding-left: %;
+
+}
+
+#addFriendBtn{
+	height: 100%;
+	line-height: 100%;
+	/*box-shadow: none;*/
+	margin:auto;
+	padding-bottom: 1%;
+}
