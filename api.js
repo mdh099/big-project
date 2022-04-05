@@ -4,6 +4,7 @@ require('mongodb');
 const { findOneAndReplace } = require('./models/user.js');
 //Load user model
 const User = require("./models/user.js");
+const Score = require("./models/score.js");
 
 exports.setApp = function(app, client){
 
@@ -45,6 +46,7 @@ exports.setApp = function(app, client){
   });
 
   // Registration
+  // Change so, it returns an error if that username already exists
   app.post('/api/registration', async function(req, res, next)  
   {
     // incoming: Username, Password, email, 
@@ -178,7 +180,8 @@ app.post('/api/searchnewfriends', async function(req, res, next)
 app.post('/api/searchcurrentfriends', async function(req, res, next)
 {
   // incoming: userID(current user logged in)
-  // outgoing currentFriends(user's friends), error message
+  // outgoing: currentFriends(user's friends), error message
+
   const { userID } = req.body;
 
   var error = '';
@@ -192,9 +195,69 @@ app.post('/api/searchcurrentfriends', async function(req, res, next)
 });
 
 
+// Add new score
+app.post('/api/addscore', async function(req, res, next)
+{
+  // incoming: username, score
+  // outgoing: -
 
+  const { userID, username, score } = req.body;
 
+  var error = '';
 
+  const newScore = {userID, Username:username, Score:score};
+
+  var error = '';
+
+  try
+  {
+    const result = await Score.create(newScore);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  var ret = {error:''};
+  res.status(200).json(ret);
+});
+
+// Show local leaderboard
+app.post('/api/showlocalleaderboard', async function(req, res, next)
+{
+  // incoming: userID(current user logged in)
+  // outgoing: username and scores of the current user every user that the current user is friends with
+  
+  const { userID } = req.body;
+
+  var error = '';
+
+  const currentUser = await User.findOne( {userID: userID} );
+
+  const friendsPlusUser = currentUser.Friends;
+  friendsPlusUser.push(userID);
+
+  const localScores = await Score.find( {userID: {$in: friendsPlusUser}} ).sort( {Score: -1 } );
+
+  var ret = {localScores, error:''};
+  res.status(200).json(ret);
+});
+
+// Show global leaderboard
+app.post('/api/showgloballeaderboard', async function(req, res, next)
+{
+  // incoming: -
+  // outgoing: username and scores of every user
+
+  var error = '';
+
+  const globalScores = await Score.find().sort( {Score: -1 } );
+
+  var ret = {globalScores, error:''};
+  res.status(200).json(ret);
+});
+
+/*
 
 // Olds cards apis
 
@@ -239,4 +302,5 @@ app.post('/api/addcard', async (req, res, next) =>
     var ret = { error: error };
     res.status(200).json(ret);
   });
+  */
 }
