@@ -1,7 +1,5 @@
 ﻿import React, { useState } from 'react';
 import './FriendsPage.css';
-import fontawesome from 'https://kit.fontawesome.com/a076d05399.js'
-import FontAwesomeIcon from 'https://kit.fontawesome.com/a076d05399.js';
 
 function FriendsPageUI()
 {
