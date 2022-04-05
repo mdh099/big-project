@@ -78,7 +78,7 @@ public class ProjectileGunTutorial : MonoBehaviour
         //Instantiate bullet/projectile
         GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
         //Rotate bullet to shoot direction
-        currentBullet.transform.TransformDirection(directionWithoutSpread.forward);
+        //currentBullet.transform.TransformDirection(directionWithoutSpread.forward);
 
         //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
         if (allowInvoke)
