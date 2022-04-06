@@ -31,10 +31,6 @@ function FriendsPageUI()
 
     const addFriend = async (event, ID) => 
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id, friendID: usersShown[ID]};
@@ -45,10 +41,7 @@ function FriendsPageUI()
             const response = await fetch(bp.buildPath('api/addfriend'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
-<<<<<<< HEAD
 
-=======
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
@@ -69,10 +62,6 @@ function FriendsPageUI()
 
     const deleteFriend = async (event, ID) => 
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id, friendID: usersShown[ID]};
@@ -103,10 +92,7 @@ function FriendsPageUI()
 
     const searchCurrentFriends = async event => 
     {
-<<<<<<< HEAD
 
-=======
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id};
@@ -151,16 +137,10 @@ function FriendsPageUI()
                 table.innerHTML = "<thead><tr><th id='nameTh'>Name</th><th id='secondTh'>" +
                     "High Score </th></tr></thead>"
 
-<<<<<<< HEAD
                 for (var i = 0; i < 6 && i < friendsArr.length; i++)
                 {
                     // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
                     
-=======
-                for (var i = 0; i < 6; i++)
-                {
-                    // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
                     usersShown[i] = friendsArr[i].userID;
 
                     var row = table.insertRow();
@@ -184,10 +164,7 @@ function FriendsPageUI()
                 }
 
                 totalPages = friendsArr.length / 6;
-<<<<<<< HEAD
                 currPage = 1;
-=======
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
 
             }
             //------------------------------------------------------------------------
@@ -199,7 +176,6 @@ function FriendsPageUI()
         }    
     };
 
-<<<<<<< HEAD
     const refreshCurrentFriends = async event => 
     {
 
@@ -298,10 +274,6 @@ function FriendsPageUI()
     const searchNewFriends = async event => 
     {
 
-=======
-    const searchNewFriends = async event => 
-    {
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id};
@@ -312,11 +284,7 @@ function FriendsPageUI()
             const response = await fetch(bp.buildPath('api/searchnewfriends'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
-<<<<<<< HEAD
             
-=======
-
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
@@ -359,10 +327,6 @@ function FriendsPageUI()
 
                     var numRow = row;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
                     row.insertCell().innerHTML = friendsArr[i].Username;
    
                     row.insertCell().innerHTML = 0;//friendsArr[i].Scores[0].current_score;
@@ -393,7 +357,6 @@ function FriendsPageUI()
         }    
     };
 
-<<<<<<< HEAD
     const refreshNewFriends = async event => 
     {
         sleep(500); // sleeps for half second while we wait for the other program
@@ -483,11 +446,6 @@ function FriendsPageUI()
 
     const nextFriendPage = async event => 
     {
-=======
-    const nextFriendPage = async event => 
-    {
-        
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         var start = currPage * 6;
 
         if (currPage == 0 || start >= friendsArr.length) return; // we are on right-most page
@@ -528,10 +486,6 @@ function FriendsPageUI()
 
     const prevFriendPage = async event => 
     {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         if (currPage == 1) return; // we are on the left-most page
 
         var start = (currPage-1) * 6 - 6;
@@ -577,7 +531,6 @@ function FriendsPageUI()
           <input type="button" id="searchCurrBtn" class="buttons" value = "Show My Friends" onClick={searchCurrentFriends} />
           <input type="button" id="searchNewBtn" class="buttons" value = "Find New Friends" onClick={searchNewFriends} />
 
-<<<<<<< HEAD
 
           <input type="button" id="plus1" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 0), refreshNewFriends(event))} />
           <input type="button" id="plus2" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 1), refreshNewFriends(event))} />
@@ -592,21 +545,6 @@ function FriendsPageUI()
           <input type="button" id="plus4" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 3), refreshCurrentFriends(event))} />
           <input type="button" id="plus5" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 4), refreshCurrentFriends(event))} />
           <input type="button" id="plus6" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 5), refreshCurrentFriends(event))} />
-=======
-          <input type="button" id="plus1" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 0), searchNewFriends(event))} />
-          <input type="button" id="plus2" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 1), searchNewFriends(event))} />
-          <input type="button" id="plus3" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 2), searchNewFriends(event))} />
-          <input type="button" id="plus4" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 3), searchNewFriends(event))} />
-          <input type="button" id="plus5" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 4), searchNewFriends(event))} />
-          <input type="button" id="plus6" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 5), searchNewFriends(event))} />
-
-          <input type="button" id="plus1" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 0), searchCurrentFriends(event))} />
-          <input type="button" id="plus2" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 1), searchCurrentFriends(event))} />
-          <input type="button" id="plus3" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 2), searchCurrentFriends(event))} />
-          <input type="button" id="plus4" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 3), searchCurrentFriends(event))} />
-          <input type="button" id="plus5" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 4), searchCurrentFriends(event))} />
-          <input type="button" id="plus6" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 5), searchCurrentFriends(event))} />
->>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
 
           <div class="DivWithTable" >
             <table class="usrsTable" id="usersTable">
