@@ -31,7 +31,10 @@ function FriendsPageUI()
 
     const addFriend = async (event, ID) => 
     {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id, friendID: usersShown[ID]};
@@ -42,6 +45,10 @@ function FriendsPageUI()
             const response = await fetch(bp.buildPath('api/addfriend'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
+<<<<<<< HEAD
+
+=======
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
@@ -62,7 +69,10 @@ function FriendsPageUI()
 
     const deleteFriend = async (event, ID) => 
     {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id, friendID: usersShown[ID]};
@@ -93,6 +103,10 @@ function FriendsPageUI()
 
     const searchCurrentFriends = async event => 
     {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id};
@@ -137,9 +151,16 @@ function FriendsPageUI()
                 table.innerHTML = "<thead><tr><th id='nameTh'>Name</th><th id='secondTh'>" +
                     "High Score </th></tr></thead>"
 
+<<<<<<< HEAD
+                for (var i = 0; i < 6 && i < friendsArr.length; i++)
+                {
+                    // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
+                    
+=======
                 for (var i = 0; i < 6; i++)
                 {
                     // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
                     usersShown[i] = friendsArr[i].userID;
 
                     var row = table.insertRow();
@@ -163,6 +184,10 @@ function FriendsPageUI()
                 }
 
                 totalPages = friendsArr.length / 6;
+<<<<<<< HEAD
+                currPage = 1;
+=======
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
 
             }
             //------------------------------------------------------------------------
@@ -174,8 +199,109 @@ function FriendsPageUI()
         }    
     };
 
+<<<<<<< HEAD
+    const refreshCurrentFriends = async event => 
+    {
+
+        sleep(500); // times out for half second while we wait for other command
+
+        event.preventDefault();
+
+        var obj = {userID: ud.id};
+        var js = JSON.stringify(obj);
+
+        try
+        {    
+            const response = await fetch(bp.buildPath('api/searchcurrentfriends'),
+                {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            var res = JSON.parse(await response.text());
+
+            //---------------------------------------------------------------------------
+            if(res.userID <= 0)
+            {
+                setMessage('searchCurrentFriend Failed');
+            }
+            else
+            {                                             
+                var user = {username:res.username,id:res.userID, email:res.email}
+
+                friendsArr = res.currentFriends;
+
+
+                // get all of the + and x buttons on left side of table
+                var add = document.getElementsByClassName("addFriendButton");
+                var del = document.getElementsByClassName("deleteFriendButton");
+
+                for (var j = 0; j < 6; j++)
+                {
+                    // we will hide all buttons by default and only make them visible later as needed
+                    del[j].style.visibility = "hidden";
+                    add[j].style.visibility = "hidden";
+                }
+
+                onNewFriends = false;
+                
+                // we get the table and clear it of previous rows
+                var table = document.getElementById("usersTable");
+                table.innerHTML = "<thead><tr><th id='nameTh'>Name</th><th id='secondTh'>" +
+                    "High Score </th></tr></thead>"
+
+                for (var i = currPage * 6 - 6; i < (currPage*6) && i < friendsArr.length; i++)
+                {
+                    // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
+                    console.log("I is " + i);
+                    
+                    usersShown[i] = friendsArr[i].userID;
+
+                    var row = table.insertRow();
+
+                    row.insertCell().innerHTML = friendsArr[i].Username;
+
+                    row.insertCell().innerHTML = 0;//friend.Scores[0].current_score;
+
+                    if (i < friendsArr.length)
+                        del[i%6].style.visibility = "visible";
+                };
+
+                if (friendsArr.length >= 6)
+                {
+                    document.getElementById("prevPageBtn").style.visibility = "visible";
+                    document.getElementById("nextPageBtn").style.visibility = "visible";
+                }
+                else
+                {
+                    document.getElementById("prevPageBtn").style.visibility = "hidden";
+                    document.getElementById("nextPageBtn").style.visibility = "hidden";
+                }
+
+                totalPages = friendsArr.length / 6;
+
+            }
+            //------------------------------------------------------------------------
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }    
+    };
+
+    // pauses program for (milliseconds) amount of time
+    function sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < milliseconds);
+    }
+
     const searchNewFriends = async event => 
     {
+
+=======
+    const searchNewFriends = async event => 
+    {
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         event.preventDefault();
 
         var obj = {userID: ud.id};
@@ -186,7 +312,11 @@ function FriendsPageUI()
             const response = await fetch(bp.buildPath('api/searchnewfriends'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
+<<<<<<< HEAD
+            
+=======
 
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
@@ -229,7 +359,10 @@ function FriendsPageUI()
 
                     var numRow = row;
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
                     row.insertCell().innerHTML = friendsArr[i].Username;
    
                     row.insertCell().innerHTML = 0;//friendsArr[i].Scores[0].current_score;
@@ -260,9 +393,101 @@ function FriendsPageUI()
         }    
     };
 
+<<<<<<< HEAD
+    const refreshNewFriends = async event => 
+    {
+        sleep(500); // sleeps for half second while we wait for the other program
+
+        event.preventDefault();
+
+        var obj = {userID: ud.id};
+        var js = JSON.stringify(obj);
+
+        try
+        {    
+            const response = await fetch(bp.buildPath('api/searchnewfriends'),
+                {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            var res = JSON.parse(await response.text());
+            
+            //---------------------------------------------------------------------------
+            if(res.userID <= 0)
+            {
+                setMessage('searchNewFriend Failed');
+            }
+            else
+            {                                            
+                var user = {username:res.username,id:res.userID, email:res.email}
+
+                friendsArr = res.users;
+
+                // we get all x and + buttons
+                var add = document.getElementsByClassName("addFriendButton");
+                var del = document.getElementsByClassName("deleteFriendButton");
+
+                for (var j = 0; j < 6; j++)
+                {
+                    // we will hide all buttons then make them visible late as needed
+                    del[j].style.visibility = "hidden";
+                    add[j].style.visibility = "hidden";
+ 
+                }
+
+                onNewFriends = true;
+                
+                // we get the table and clear it of all previous rows
+                var table = document.getElementById("usersTable");
+                table.innerHTML = "<thead><tr><th id='nameTh'>Name</th><th id='secondTh'>" +
+                    "High Score </th></tr></thead>";
+
+                for (var i = currPage * 6 - 6; i < (currPage*6) && i < friendsArr.length; i++)
+                {
+                    // we render rows of users indivisually and fill usersShown with
+                    // the ID's of the users on the table
+                    usersShown[i] = friendsArr[i].userID;
+
+                    var row = table.insertRow();
+
+                    var numRow = row;
+
+                    row.insertCell().innerHTML = friendsArr[i].Username;
+   
+                    row.insertCell().innerHTML = 0;//friendsArr[i].Scores[0].current_score;
+
+                    if (i < friendsArr.length)
+                        add[i%6].style.visibility = "visible";
+                }
+
+                // if the list is only one page, we do not want to have arrows to change page
+                if (friendsArr.length >= 6)
+                {
+                    document.getElementById("prevPageBtn").style.visibility = "visible";
+                    document.getElementById("nextPageBtn").style.visibility = "visible";
+                }
+                else
+                {
+                    document.getElementById("prevPageBtn").style.visibility = "hidden";
+                    document.getElementById("nextPageBtn").style.visibility = "hidden";
+                }
+
+                totalPages = friendsArr.length / 6;
+            }
+
+            //------------------------------------------------------------------------
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }    
+    };
+
+    const nextFriendPage = async event => 
+    {
+=======
     const nextFriendPage = async event => 
     {
         
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         var start = currPage * 6;
 
         if (currPage == 0 || start >= friendsArr.length) return; // we are on right-most page
@@ -303,7 +528,10 @@ function FriendsPageUI()
 
     const prevFriendPage = async event => 
     {
+<<<<<<< HEAD
+=======
         
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
         if (currPage == 1) return; // we are on the left-most page
 
         var start = (currPage-1) * 6 - 6;
@@ -349,6 +577,22 @@ function FriendsPageUI()
           <input type="button" id="searchCurrBtn" class="buttons" value = "Show My Friends" onClick={searchCurrentFriends} />
           <input type="button" id="searchNewBtn" class="buttons" value = "Find New Friends" onClick={searchNewFriends} />
 
+<<<<<<< HEAD
+
+          <input type="button" id="plus1" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 0), refreshNewFriends(event))} />
+          <input type="button" id="plus2" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 1), refreshNewFriends(event))} />
+          <input type="button" id="plus3" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 2), refreshNewFriends(event))} />
+          <input type="button" id="plus4" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 3), refreshNewFriends(event))} />
+          <input type="button" id="plus5" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 4), refreshNewFriends(event))} />
+          <input type="button" id="plus6" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 5), refreshNewFriends(event))} />
+
+          <input type="button" id="plus1" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 0), refreshCurrentFriends(event))} />
+          <input type="button" id="plus2" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 1), refreshCurrentFriends(event))} />
+          <input type="button" id="plus3" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 2), refreshCurrentFriends(event))} />
+          <input type="button" id="plus4" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 3), refreshCurrentFriends(event))} />
+          <input type="button" id="plus5" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 4), refreshCurrentFriends(event))} />
+          <input type="button" id="plus6" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 5), refreshCurrentFriends(event))} />
+=======
           <input type="button" id="plus1" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 0), searchNewFriends(event))} />
           <input type="button" id="plus2" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 1), searchNewFriends(event))} />
           <input type="button" id="plus3" class="addFriendButton" value="+" onClick={(event) => (addFriend(event, 2), searchNewFriends(event))} />
@@ -362,6 +606,7 @@ function FriendsPageUI()
           <input type="button" id="plus4" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 3), searchCurrentFriends(event))} />
           <input type="button" id="plus5" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 4), searchCurrentFriends(event))} />
           <input type="button" id="plus6" class="deleteFriendButton" value="&#10005;" onClick={(event) => (deleteFriend(event, 5), searchCurrentFriends(event))} />
+>>>>>>> 10a0aba4fa86615b228f287ca5d8a6d196bd0f4d
 
           <div class="DivWithTable" >
             <table class="usrsTable" id="usersTable">
