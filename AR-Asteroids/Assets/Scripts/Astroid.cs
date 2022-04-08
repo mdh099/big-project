@@ -15,6 +15,7 @@ public class Astroid : MonoBehaviour
     void Start()
     {
         rotate = calculateAstroidRotation();
+        templates = FindObjectOfType<AstroidTemplates>();
     }
     // Update is called once per frame
     void Update()
