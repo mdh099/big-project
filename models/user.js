@@ -22,9 +22,13 @@ const UserSchema = new Schema({
         type: Array,
         required: true
     },
-    Scores: {
-        type: Array,
+    IsVerified: {
+        type: Boolean,
         required: true
+    },
+    Highscore: {
+        type: Number,
+        require: true
     }
 });
 

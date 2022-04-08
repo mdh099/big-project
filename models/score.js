@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 //Create Schema
 const ScoreSchema = new Schema({
     userID: {
-        type: Number
+        type: Number,
+        required: true
     },
     Username: {
         type: String,

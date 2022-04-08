@@ -1,69 +1,67 @@
 require('express');
 require('mongodb');
+require('dotenv').config();
 
 const { findOneAndReplace } = require('./models/user.js');
 //Load user model
 const User = require("./models/user.js");
 const Score = require("./models/score.js");
 
+const twilioClient = require("twilio")(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
+const verificationSID = process.env.TWILIO_VERIFY_SID;
+
 exports.setApp = function(app, client){
 
   // Login
-  // Complete, returns userID and email. 
-  app.post('/api/login', async function(req, res, next)  
+  // incoming: login, password
+  // outgoing: id, firstName, lastName, error
+  app.post('/api/login', async function(req, res, next)
   {
-    // incoming: login, password
-    // outgoing: id, firstName, lastName, error
-	
     var error = '';
 
     const { login, password } = req.body;
-    
-    // Old mongodb query
-    //const db = client.db();
-    //const results = await db.collection('Users').find({Username:login,Password:password}).toArray();
 
     const results = await User.findOne({ Username: login, Password: password });
 
     var userID = -1;
     var username = '';
     var email = '';
+    var isVerified = false;
 
     if(results)
     {
       userID = results.userID;
       username = results.Username;
       email = results.email;
-      // used to be userID = results[0]._id;
+      isVerified = results.IsVerified; 
     }
     else
     {
       ret = {error:"Login/Password incorrect"};
     }
 
-    var ret = { userID:userID, username:username, email: email, error:''};
+    var ret = { userID:userID, username:username, email: email, IsVerified: isVerified, error:''};
     res.status(200).json(ret);
   });
 
   // Registration
   // Change so, it returns an error if that username already exists
-  app.post('/api/registration', async function(req, res, next)  
+  // incoming: Username, Password, email, 
+  // (maybe not) outgoing: id, error 
+  app.post('/api/registration', async function(req, res, next)
   {
-    // incoming: Username, Password, email, 
-    // (maybe not) outgoing: id, error 
     const { login, password, email } = req.body;
 
-    const newUser = {Username:login, Password:password, email:email};
-  
-    // var userID = -1;
+    const newUser = {Username:login, Password:password, email:email, IsVerified: false, EmailToken: null};
+
     var error = '';
 
     try
     {
-      // Old mongodb query
-      //const db = client.db();
-      //const result = db.collection('Users').insertOne(newUser);
-
       const result = await User.create(newUser);
     }
     catch(e)
@@ -71,8 +69,90 @@ exports.setApp = function(app, client){
       error = e.toString();
     }
 
-    var ret = { error: error/*, userID:userID*/};
+    console.log("Will now create verification code");
+    // Create the verification code
+    twilioClient.verify
+            .services(verificationSID)
+            .verifications
+            .create({channelConfiguration: {
+                    template_id: 'd-db4824d7f6cd4adcab81570907256a41',
+                    from: 'ARAsteroids@gmail.com',
+                    from_name: 'Team at AR-Asteroids'
+                    }, to: email, channel: "email" })
+            .then(verification => { console.log(verification.sid);
+              // app.get("/verify", (req, res) => {
+              //     email: req.query.email; 
+              // });
+              // res.redirect(/verify?email=${email});
+            })
+            .catch(error => {
+              console.log("Caught error, uncomment next line to see it.");
+              console.log(error);
+            });
+
+    var ret = { error: error};
     res.status(200).json(ret);
+  });
+
+  async function setIsVerified(login){
+    console.log("Made it to setIsVerified"); 
+    console.log(login);
+    var error = '';
+
+    const filter = { Username: login };
+    const update = {IsVerified: true};
+
+    // doc is the document before update was applied
+    let doc = await User.findOneAndUpdate(filter, update);
+    doc.IsVerified;
+
+    doc = await User.findOne(filter);
+    doc.IsVerified; 
+
+    var ret = { error: '' };
+
+    console.log("Reach end of setIsVerified function!"); 
+  }
+
+  app.post("/api/verify", (req, res) => {
+    // incoming: code, email, login
+    // outgoing: error
+    var error = ""; 
+    var ret;
+
+    const userCode = req.body.code;
+    const email = req.body.email;
+    const Username = req.body.login; 
+
+    console.log(`Code: ${userCode}`);
+    console.log(`Email: ${email}`);
+
+    // DO NOT MESS WITH
+    // RE-comment this whole block of code if something stops working again. 
+    twilioClient.verify
+      .services(verificationSID)
+      .verificationChecks.create({ to: email, code: userCode })
+      .then(verification_check => {
+          if (verification_check.status === "approved") {
+            console.log("Verification succeeded");   // For testing purposes 
+            error = ""; 
+            ret = {error: ""};
+            setIsVerified(req.body.login); 
+          }
+          else{
+              console.log("-Caught error-. Greetings from else statement.");
+              console.log('Verification failed');
+              ret = {error: "verification failed"};
+              error = "verification failed";
+          }
+      })
+      .catch(error => {
+        console.log("Caught error");
+        error = "verification failed";
+      }); 
+
+      ret = {error: error};
+      res.status(200).json(ret);
   });
 
   app.post('/api/editaccount', async (req, res, next) => 
@@ -263,6 +343,14 @@ app.post('/api/addfriend', async function(req, res, next)
     {
       error = 'Error adding new score';
     }
+
+    /*
+    if(score > currentUser.Highscore){
+        const filter = { userID:userID };
+        const update = { Highscore:score };
+        await User.findOneAndUpdate(filter, update);
+    } 
+    */
 
     // Return with error message
     var ret = {error};
