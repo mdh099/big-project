@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Asteroid
   - Bolt
+  - AsteroidMed
+  - AsteroidSmall
   layers:
   - Default
   - TransparentFX

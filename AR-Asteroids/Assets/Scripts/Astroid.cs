@@ -8,6 +8,8 @@ public class Astroid : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float rotationMaxSpeed;
 
+    private AstroidTemplates templates;
+
     private Vector3 rotate;
 
     void Start()
@@ -30,5 +32,42 @@ public class Astroid : MonoBehaviour
 
         Vector3 newRotation = new Vector3(astroidX, astroidY, astroidZ);
         return newRotation;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Bolt has collied with something");
+
+        if (other.CompareTag("Bolt"))
+        {
+            if(CompareTag("Asteroid"))
+            {
+                Destroy(other.gameObject);
+            
+                int rand = Random.Range(0, templates.AstroidsMedium.Length);
+                Instantiate(templates.AstroidsMedium[rand], transform.position, Quaternion.identity);
+
+                Debug.Log("Bolt has destroied Large asteroid");
+                Destroy(gameObject);
+            }
+            if (gameObject.CompareTag("AsteroidMed"))
+            {
+                Destroy(other.gameObject);
+
+                int rand = Random.Range(0, templates.AstroidsSmall.Length);
+                Instantiate(templates.AstroidsSmall[rand], transform.position, Quaternion.identity);
+
+                Destroy(gameObject);
+                Debug.Log("Bolt has destroied Medium asteroid");
+            }
+            if (gameObject.CompareTag("AsteroidSmall"))
+            {
+                Destroy(other.gameObject);
+                Destroy(gameObject);
+                Debug.Log("Bolt has destroied Small asteroid");
+            }
+
+            //Invoke("destroySelf", .1f);
+        }
     }
 }

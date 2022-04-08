@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bolt : MonoBehaviour
 {
-    private float speed = 0.001f;
+    [SerializeField] float speed = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +18,7 @@ public class Bolt : MonoBehaviour
         transform.position += new Vector3(0, 0, speed);
     }
 
-    void destroySelf()
-    {
-        Destroy(gameObject);
-    }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Bolt has collied with something");
@@ -35,5 +31,5 @@ public class Bolt : MonoBehaviour
             //Invoke("destroySelf", .1f);
         }
     }
-
+    */
 }
