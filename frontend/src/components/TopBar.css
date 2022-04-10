@@ -2,44 +2,37 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: content-box;
   font-family: 'KoHo';
-  font-style: normal;
-  font-weight: 300;
   font-size: 30px;
-  line-height: 47px;
-}
-
-[id=dropdown] {
-    font-family: 'KoHo';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 36px;
-    line-height: 47px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.69);
-    border: transparent;
-
-    width: 351px;
-    height: 58px;
-
-    background: #000000;
-    box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
 }
 
 .dropdown {
-  height: 18vh;
-/*  width: 60%;*/
+  height: 19vh;
   margin: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
+.account:hover,
+.leaderboard:hover,
+[id=download]:hover,
+[id=friends]:hover,
+[id=logout]:hover {
+  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.3);
+  background: rgba(69, 69, 69, .95);
+  transition: all 0.4s ease;
+}
+
+/*.account,
+.leaderboard,
+[id=download],
+[id=friends],
+[id=logout] {
+  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.3);
+  transition: all 0.4s ease;
+}*/
 
 .account,
 .leaderboard {
@@ -54,18 +47,25 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  align-items: center;
-  width: 200px;
+  align-items: left;
+  width: 300px;
   height: 200px;
-  background: white;
-  left: 0px;
-  list-style: none;
-  border-radius: 5px;
+  background: rgba(69, 69, 69, .95);
+  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.3);
+/*   background: transparent; */
+  color: rgba(255, 255, 255, 0.69);
+/*  background: white;*/
+/*  left: 0px;*/
+/*  list-style: none;*/
+/*   border-radius: 5px; */
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
   transition: all 0.4s ease;
+  margin: 0;
+  padding: 0;
 }
+
 .account li,
 .leaderboard li {
   width: 100%;
@@ -77,14 +77,18 @@
 
 .account li:hover,
 .leaderboard li:hover {
-  background-color: rgb(197, 173, 181);
+  background-color: rgba(255, 255, 255, 0.30);
   pointer-events: auto;
+  transition: all 0.4s ease;
+  color: #FFD706;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.51);
 }
 
 .account a,
 .leaderboard a {
-  color: black;
+  color: white;
   text-decoration: none;
+
 }
 
 .dropdown button,

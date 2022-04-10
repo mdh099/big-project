@@ -20,7 +20,7 @@ const TopBar = () =>
     return(
         <nav>
       <div class="dropdown">
-        <button><a href="/download" class="download">Download</a></button>
+        <button id="download"><a href="/download" class="download">Download</a></button>
         <div class="account">
           <button>Account</button>
           <ul>
@@ -38,8 +38,8 @@ const TopBar = () =>
             <li><a href="/personalleaderboard">Personal Best</a></li>
           </ul>
         </div>
-        <button><a href="/friends" class="friends">Friends</a></button>
-        <button><a href="/" class="logout">Log Out</a></button>
+        <button id="friends"><a href="/friends" class="friends">Friends</a></button>
+        <button id="logout"><a href="/" class="logout">Log Out</a></button>
       </div>
     </nav>
     );
