@@ -39,12 +39,11 @@ const HomePage = () =>
       <div>
         <PageTitle />
         
-        <div/>
+        <br />
         <input type="button" id="GoToLoginPageBtn" className="buttons" value = "Login" onClick= {goToLogin} />
 
-        <div/>
-        <br/>
-        <br/>
+        <br />
+        <br />
 
         <input type="button" id="GoToRegisterPageBtn" className="buttons" value = "Register" onClick= {goToRegister} />
 

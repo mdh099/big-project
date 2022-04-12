@@ -1,14 +1,14 @@
 import React from 'react';
 import PageTitle from '../components/PageTitle';
-import Register from '../components/Register';
+import EmailConfirmUI from '../components/emailConfirmUI';
 
-const RegisterPage = () =>
+const EmailConfirmPage = () =>
 {
     return(
       <div>
         <PageTitle />
-        <Register />
+        <EmailConfirmUI />
       </div>
     );
 };
-export default RegisterPage;
+export default EmailConfirmPage;

@@ -36,9 +36,9 @@ function Login()
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
             //---------------------------------------------------------------------------
-            if(res.userID <= 0)
+            if(res.userID <= 0 || !res.IsVerified)
             {
-                setMessage('Login Failed');
+                setMessage('Login Failed. Ensure that Your Account is Verified');
             }
             else
             {                                             // Changed res.id to res.userID
@@ -57,6 +57,7 @@ function Login()
             return;
         }    
     };
+
     return(
       <div id="loginDiv">
 
@@ -78,18 +79,12 @@ function Login()
         </form>
 
         <br/>
-        <br/>
-        <br/>
         <span id="loginResult">{message}</span>
-        <br/>
-        <br/>
         <br/>
         <createLnk id="inner-title" onClick={gotoRegister}>Create Account</createLnk>
         <br/>
         <br/>
         <resetLnk id="inner-title">Reset Password</resetLnk>
-        <br/>
-        <br/>
      </div>
     );
 };

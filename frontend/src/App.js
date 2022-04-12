@@ -8,6 +8,9 @@ import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import FriendsPage from './pages/FriendsPage';
+import EmailConfirmPage from './pages/EmailConfirmPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import ChangeEmailPage from './pages/ChangeEmailPage';
 
 function App() {
   return (
@@ -38,8 +41,20 @@ function App() {
           <LeaderboardPage />
         </Route>
 
+	<Route path="/changepassword" exact>
+          <ChangePasswordPage />
+        </Route>
+
+        <Route path="/changeemail" exact>
+          <ChangeEmailPage />
+        </Route>
+
         <Route path="/friends" exact>
           <FriendsPage />
+        </Route>
+
+        <Route path="/emailConfirm" exact>
+          <EmailConfirmPage />
         </Route>
 
         <Redirect to="/" />

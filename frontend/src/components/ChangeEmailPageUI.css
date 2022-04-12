@@ -1,0 +1,14 @@
+#accInfo {
+	color: rgba(255, 255, 255, 0.69);
+}
+
+#changeEmailDiv{
+	position: absolute;
+	top: 30%;
+	width: 100%;
+}
+
+#accInfo{
+	font-size: 180%;
+	font-family: 'KoHo';
+}

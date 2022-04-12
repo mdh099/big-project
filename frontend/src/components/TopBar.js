@@ -21,26 +21,28 @@ const TopBar = () =>
         <nav>
       <div class="dropdown">
         <button id="download"><a href="/download" class="download">Download</a></button>
+
         <div class="account">
-          <button>Account</button>
+          <button id="btnforAccountDrop">Account</button>
+
           <ul>
             <li><a href="/account">View Account</a></li>
             <li><a href="/changeemail">Change Email</a></li>
             <li><a href="/changepassword">Change Password</a></li>
             <li><a href="/deleteaccount">Delete Account</a></li>
           </ul>
+
         </div>
-        <div class="leaderboard">
-          <button>Leaderboards</button>
-          <ul>
-            <li><a href="/globalleaderboard">All Users</a></li>
-            <li><a href="/friendleaderboard">Friends</a></li>
-            <li><a href="/personalleaderboard">Personal Best</a></li>
-          </ul>
-        </div>
+
+        <button id="btnforboards"><a href="/leaderboard" class="leaderboard">Leaderboards</a></button>
+
+
+
         <button id="friends"><a href="/friends" class="friends">Friends</a></button>
+
         <button id="logout" onClick={doLogout}><a href="/" class="logout">Log Out</a></button>
       </div>
+
     </nav>
     );
 }

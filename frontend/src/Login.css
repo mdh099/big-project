@@ -10,11 +10,13 @@ html {
     box-shadow: inset 0px 0px 60px rgba(255, 255, 255, 0.6);
 }
 
+
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
   gap:25px;
   padding: 1px;
+  width: 100%;
 }
 
 [id=loginName] {
@@ -60,22 +62,22 @@ html {
 [id=loginButton] {
     font-family: 'KoHo';
     font-style: normal;
-    font-weight: 300;
-    font-size: 36px;
+    font-size: 170%;
     line-height: 47px;
-    display: flex;
     align-items: center;
     text-align: center;
     background: transparent;
     color: rgba(255, 255, 255, 0.69);
     border:transparent;
 
-    width: 58px;
-    height: 60px;
-    padding: 0 0 8px 4px;
+    width: 250%;
+    height: 100%;
+    padding: 0px;
 
     background: #000000;
     box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.3);
+
+    margin: auto;
 }
 
 [id=loginButton]:hover {
@@ -112,6 +114,7 @@ resetLnk {
     text-align: center;
 
     color: rgba(255, 255, 255, 0.69);
+
 }
 
 span {
@@ -139,3 +142,4 @@ form {
 createLnk:hover {
     color: #FFD706;
 }
+

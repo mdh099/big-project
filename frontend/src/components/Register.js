@@ -39,10 +39,26 @@ function Register()
             }
         };
 
+        const goToEmailConfirm = async event =>
+        {
+            event.preventDefault();
+            try
+            {
+                window.location.href = '/emailConfirm';
+
+            }
+            catch(e)
+            {
+                console.log(e.toString());
+                return;
+            }
+        };
+
      const doRegister = async event => 
     {
         event.preventDefault();
         var obj = {login:RegisterName.value, password:RegisterPassword.value, email: RegisterEmail.value};
+
         var js = JSON.stringify(obj);
         try
         {    
@@ -52,14 +68,17 @@ function Register()
 
             if( res.error !== "" )
             {
-                setMessage('Username Already In Use');
+                if (obj.login == "" || obj.password == "" || obj.email == "")
+                {
+                    setMessage('Please Fill out All Fields');
+                }
+                else 
+                    setMessage('Username Already In Use');
             }
             else
             {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-                localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
-                window.location.href = '/';
+                window.location.href = '/emailConfirm';
             }
         }
         catch(e)
@@ -67,8 +86,8 @@ function Register()
             console.log(e.toString());
             return;
         }    
-
     };
+
     return(
       <div id="RegisterDiv">
         <form onSubmit={doRegister}>
@@ -92,12 +111,10 @@ function Register()
 
         </form>
         <br/>
-        <br/>
-        <br/>
         <span id="RegisterResult">{message}</span>
-        <br/>
-        <br/>
+
         <loginLink id="gotoLoginLink" onClick={gotoLogin} >Have an account?</loginLink>
+        <loginLink id="gotoVerifyLink" onClick={goToEmailConfirm} >Need to Verify your Account?</loginLink>
      </div>
     );
 };

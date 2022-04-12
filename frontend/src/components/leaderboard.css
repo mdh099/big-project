@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=KoHo:ital@0;1&family=VT323&display=swap');
+
+#showLocalBtn, #showAllBtn{
+	justify-content: center;
+	display: inline-flex; 
+	height: 6%;
+	width: 19.5%;
+	top: 32%;
+	left: 30.25%;
+	border-radius: 0px;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: 2vw;
+	display: inline;
+}
+
+#showAllBtn{
+	left: 50.25%;
+}
+
+#divWithBoard, #leaderboardTable{
+	justify-content: center;
+	display: table inline; 
+    align-items: flex-start; 
+	height: 50%;
+	width: 80%;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: min(3vw, 25px);
+	border: none;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
+
+    font-family: 'VT323';
+	font-size: 156%;
+
+	text-align: center;
+
+
+}
+
+#divWithBoard{
+	overflow-y: auto;
+	top: 41%;
+
+	align-items: center; 
+	left: 10%;
+}
+
+#divWithBoard thead th{
+	position: sticky;
+	top: 0;
+	background-color: black;
+}
+
+#leaderboardTable{
+	border-collapse: collapse;
+	width: 60%;
+	left: 21%;
+}
+
+
+#boardTh1, #boardTh2, #boardTh3, #tabledata{
+	text-align: center;
+	border: none;
+}
+
+#boardTh1, #boardTh2, #boardTh3{
+	color: #A9EFFE;
+}
+
+#tabledata{
+	color: #FFF59B;
+}
+
+.flexcroll{
+    scrollbar-face-color: #367CD2;
+    scrollbar-shadow-color: #FFFFFF;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-3dlight-color: #FFFFFF;
+    scrollbar-darkshadow-color: #FFFFFF;
+    scrollbar-track-color: #FFFFFF;
+    scrollbar-arrow-color: #FFFFFF;
+}
+
+/* Let's get this party started */
+.flexcroll::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+.flexcroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px grey; 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+.flexcroll::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #A9EFFE; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
