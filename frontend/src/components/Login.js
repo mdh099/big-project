@@ -27,14 +27,21 @@ function Login()
 
     const doLogin = async event => 
     {
+        console.log("IN DOLOGIN");
+
         event.preventDefault();
         var obj = {login:loginName.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
+
+
         try
         {    
+            console.log("here1");
             const response = await fetch(bp.buildPath('api/login'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
+
+            console.log(res);
             //---------------------------------------------------------------------------
             if(res.userID <= 0 || !res.IsVerified)
             {
