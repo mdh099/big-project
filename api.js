@@ -34,19 +34,27 @@ exports.setApp = function(app, client){
 
     if(results)
     {
-      userID = results.userID;
-      username = results.Username;
-      email = results.email;
-      isVerified = results.IsVerified; 
+      if(results.IsVerified){
+        userID = results.userID;
+        username = results.Username;
+        email = results.email;
+        isVerified = results.IsVerified;
+
+        var ret = { userID:userID, username:username, email: email, IsVerified: isVerified, error:''};
+        res.status(200).json(ret);
+      }
+      else{
+        var ret = { userID:userID, username:username, email: email, IsVerified: isVerified, error:'Account is not verified.'};
+        res.status(200).json(ret);
+      }
     }
     else
     {
       ret = {error:"Login/Password incorrect"};
+      res.status(200).json(ret);
     }
-
-    var ret = { userID:userID, username:username, email: email, IsVerified: isVerified, error:''};
-    res.status(200).json(ret);
   });
+
 
   // Registration
   // Change so, it returns an error if that username already exists
@@ -95,7 +103,6 @@ exports.setApp = function(app, client){
   });
 
   async function setIsVerified(login){
-    console.log("Made it to setIsVerified"); 
     console.log(login);
     var error = '';
 
@@ -110,8 +117,6 @@ exports.setApp = function(app, client){
     doc.IsVerified; 
 
     var ret = { error: '' };
-
-    console.log("Reach end of setIsVerified function!"); 
   }
 
   app.post("/api/verify", (req, res) => {
@@ -134,25 +139,22 @@ exports.setApp = function(app, client){
       .verificationChecks.create({ to: email, code: userCode })
       .then(verification_check => {
           if (verification_check.status === "approved") {
-            console.log("Verification succeeded");   // For testing purposes 
-            error = ""; 
-            ret = {error: ""};
+            console.log("Verification succeeded");
             setIsVerified(req.body.login); 
+
+            ret = {error: ''};
+            res.status(200).json(ret);
           }
-          else{
-              console.log("-Caught error-. Greetings from else statement.");
-              console.log('Verification failed');
-              ret = {error: "verification failed"};
-              error = "verification failed";
+          else{            
+            ret = {error: 'Invalid verification code.'};
+            res.status(200).json(ret);
           }
       })
       .catch(error => {
         console.log("Caught error");
-        error = "verification failed";
+        ret = {error: 'Something went wrong, please try again shortly.'};
+        res.status(200).json(ret);
       }); 
-
-      ret = {error: error};
-      res.status(200).json(ret);
   });
 
   app.post('/api/editaccount', async (req, res, next) => 
