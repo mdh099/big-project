@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
     {
         currentBolt = Instantiate(boltPrefab);
 
-        //currentBolt.transform.position = boltSpawn.position;
+        currentBolt.transform.position = boltSpawn.position;
 
         Vector3 rotation = currentBolt.transform.rotation.eulerAngles;
         currentBolt.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);

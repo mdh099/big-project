@@ -10,13 +10,18 @@ public class Bolt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("death", 5.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         //transform.position += new Vector3(0, 0, speed);
+    }
+
+    private void death()
+    {
+        Destroy(gameObject);
     }
 
     /*
