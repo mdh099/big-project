@@ -87,6 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fdc114b1ed7ab44a92ff872da714b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bolt: {fileID: 0}
+  fpsCam: {fileID: 0}
 --- !u!114 &6536060014054101126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,10 +102,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 8263257791350647365, guid: 8d390cc5232b68f47aff62214f7a096e, type: 3}
+  shootForce: 0
+  upwardForce: 0
   timeBetweenShooting: 1
+  spread: 0
+  reloadTime: 0
   timeBetweenShots: 1
+  magazineSize: 0
   bulletsPerTap: 1
   allowButtonHold: 1
+  playerRb: {fileID: 0}
+  recoilForce: 0
   fpsCam: {fileID: 0}
   attackPoint: {fileID: 350647195155734610}
+  muzzleFlash: {fileID: 0}
+  ammunitionDisplay: {fileID: 0}
   allowInvoke: 1

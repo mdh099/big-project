@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bolt : MonoBehaviour
 {
     [SerializeField] float speed = 0.01f;
+    public Camera fpsCam;
 
     // Start is called before the first frame update
     void Start()

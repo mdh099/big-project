@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Astroid : MonoBehaviour
 {
-    [SerializeField] private GameObject playerObj;
+    [SerializeField] public GameObject playerObj;
     [SerializeField] private float speed;
     [SerializeField] private float rotationMaxSpeed;
 
@@ -35,6 +35,11 @@ public class Astroid : MonoBehaviour
         return newRotation;
     }
 
+    public void spawnAsteroids()
+    {
+        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Bolt has collied with something");
@@ -43,26 +48,58 @@ public class Astroid : MonoBehaviour
         {
             if(CompareTag("Asteroid"))
             {
+                //Destroy bolt and get ran
                 Destroy(other.gameObject);
-            
                 int rand = Random.Range(0, templates.AstroidsMedium.Length);
-                Instantiate(templates.AstroidsMedium[rand], transform.position, Quaternion.identity);
+                float randx = Random.Range(1.0f, 2.0f);
+                float randy = Random.Range(-0.5f, 0.5f);
+                float randz = Random.Range(1.0f, 2.0f);
 
+                //Spawn the first new asteroid
+                Vector3 newPostion = new Vector3(transform.position.x + randx, transform.position.y + randy, transform.position.z + randz);
+                GameObject newAsteroid = Instantiate(templates.AstroidsMedium[rand], newPostion, Quaternion.identity);
+                Astroid newThing = newAsteroid.GetComponent<Astroid>();
+                newThing.playerObj = playerObj;
+
+                //Spawn the second new asteroid
+                newPostion = new Vector3(transform.position.x - randx, transform.position.y + randy, transform.position.z - randz);
+                newAsteroid = Instantiate(templates.AstroidsMedium[rand], newPostion, Quaternion.identity);
+                newThing = newAsteroid.GetComponent<Astroid>();
+                newThing.playerObj = playerObj;
+
+                //Destroy asteroid
                 Debug.Log("Bolt has destroied Large asteroid");
                 Destroy(gameObject);
             }
             if (gameObject.CompareTag("AsteroidMed"))
             {
+                //Destroy bolt and get ran
                 Destroy(other.gameObject);
-
                 int rand = Random.Range(0, templates.AstroidsSmall.Length);
-                Instantiate(templates.AstroidsSmall[rand], transform.position, Quaternion.identity);
+                float randx = Random.Range(1.0f, 2.0f);
+                float randy = Random.Range(-0.5f, 0.5f);
+                float randz = Random.Range(1.0f, 2.0f);
 
+                //Spawn the first new asteroid
+
+                Vector3 newPostion = new Vector3(transform.position.x + randx, transform.position.y + randy, transform.position.z + randz);
+                GameObject newAsteroid = Instantiate(templates.AstroidsSmall[rand], newPostion, Quaternion.identity);
+                Astroid newThing = newAsteroid.GetComponent<Astroid>();
+                newThing.playerObj = playerObj;
+
+                //Spawn the second new asteroid
+                newPostion = new Vector3(transform.position.x - randx, transform.position.y + randy, transform.position.z - randz);
+                newAsteroid = Instantiate(templates.AstroidsSmall[rand], newPostion, Quaternion.identity);
+                newThing = newAsteroid.GetComponent<Astroid>();
+                newThing.playerObj = playerObj;
+
+                //Destroy asteroid
                 Destroy(gameObject);
                 Debug.Log("Bolt has destroied Medium asteroid");
             }
             if (gameObject.CompareTag("AsteroidSmall"))
             {
+                //Destroy everything
                 Destroy(other.gameObject);
                 Destroy(gameObject);
                 Debug.Log("Bolt has destroied Small asteroid");
@@ -72,3 +109,11 @@ public class Astroid : MonoBehaviour
         }
     }
 }
+
+/* Notes
+    // Get direction from A to B
+    Vector3 posA = ObjectA.position;
+    Vector3 posB = ObjectB.position;
+    //Destination - Origin
+    Vector3 dir = (posB - posA).normalized;
+ */

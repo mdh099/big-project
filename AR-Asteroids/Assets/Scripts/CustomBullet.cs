@@ -16,7 +16,7 @@ public class CustomBullet : MonoBehaviour
     public LayerMask whatIsEnemies;
 
     //Stats
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float bounciness;
     public bool useGravity;
 
@@ -108,3 +108,4 @@ public class CustomBullet : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, explosionRange);
     }
 }
+
