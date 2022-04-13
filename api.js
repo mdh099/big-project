@@ -111,10 +111,10 @@ exports.setApp = function(app, client){
 
     // doc is the document before update was applied
     let doc = await User.findOneAndUpdate(filter, update);
-    doc.IsVerified;
+    //doc.IsVerified;
 
     doc = await User.findOne(filter);
-    doc.IsVerified; 
+    //doc.IsVerified; 
 
     var ret = { error: '' };
   }
