@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bolt : MonoBehaviour
 {
-    [SerializeField] float speed = 0.01f;
-    public Camera fpsCam;
+    //[SerializeField] float speed = 0.01f;
+    //public Camera fpsCam;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,7 @@ public class Bolt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, 0, speed);
+        //transform.position += new Vector3(0, 0, speed);
     }
 
     /*
