@@ -426,7 +426,7 @@ app.post('/api/addfriend', async function(req, res, next)
     }
 
     // Return with error message
-    var ret = {currentFriends: currentFriends, error: error};
+    var ret = {currentFriends: currentFriends, error: error, jwtToken: refreshedToken};
     res.status(200).json(ret);
   });
 
