@@ -170,8 +170,22 @@ exports.setApp = function(app, client){
   app.post('/api/editaccount', async (req, res, next) => 
   {
     var error = '';
-  
-    const { login, password, email } = req.body;
+
+    const { login, password, email, jwtToken } = req.body;
+
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
   
     const filter = { Username: login };
     const update = {Password: password, email: email};
@@ -185,8 +199,18 @@ exports.setApp = function(app, client){
     doc = await User.findOne(filter);
     doc.Password; 
     doc.email;
+
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
   
-    var ret = { error: '' };
+    var ret = { error: '', jwtToken: refreshedToken  };
     res.status(200).json(ret);
   });
   
