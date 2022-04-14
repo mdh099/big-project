@@ -15,7 +15,6 @@ const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
-
 //const MongoClient = require('mongodb').MongoClient;
 //const url = 'mongodb+srv://jm:cop4331@cluster0.k1bed.mongodb.net/COP4331?retryWrites=true&w=majority';
 require('dotenv').config();

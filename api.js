@@ -1,6 +1,7 @@
 require('express');
 require('mongodb');
 require('dotenv').config();
+var token = require('./createJWT.js');
 
 const { findOneAndReplace } = require('./models/user.js');
 //Load user model
@@ -40,7 +41,16 @@ exports.setApp = function(app, client){
         email = results.email;
         isVerified = results.IsVerified;
 
-        var ret = { userID:userID, username:username, email: email, IsVerified: isVerified, error:''};
+        try
+        {
+          const token = require("./createJWT.js");
+          ret = token.createToken( username, email, userID );
+        }
+        catch(e)
+        {
+          ret = {error:e.message};
+        }
+
         res.status(200).json(ret);
       }
       else{
@@ -52,7 +62,7 @@ exports.setApp = function(app, client){
     {
       ret = {error:"Login/Password incorrect"};
       res.status(200).json(ret);
-    }
+    } 
   });
 
 
@@ -208,7 +218,22 @@ exports.setApp = function(app, client){
 app.post('/api/addfriend', async function(req, res, next)  
 {
   // Gets input JSON
-  const { userID, friendID } = req.body;
+  const { userID, friendID, jwtToken } = req.body;
+
+  // Checks if JWT is expired
+  try
+  {
+    if( token.isExpired(jwtToken))
+    {
+      var r = {error:'The JWT is no longer valid', jwtToken: ''};
+      res.status(200).json(r);
+      return;
+    }
+  }
+  catch(e)
+  {
+    console.log(e.message);
+  }
 
   // Initializes error
   var error = '';
@@ -233,8 +258,19 @@ app.post('/api/addfriend', async function(req, res, next)
     error = 'Error. Current user does not exist.';
   }
 
+  // Refreshes JWT
+  var refreshedToken = null;
+  try
+  {
+    refreshedToken = token.refresh(jwtToken);
+  }
+    catch(e)
+  {
+    console.log(e.message);
+  }
+
   // Return with error message
-  var ret = { error };
+  var ret = { error: error, jwtToken: refreshedToken };
   res.status(200).json(ret);
 });
 
@@ -244,7 +280,22 @@ app.post('/api/addfriend', async function(req, res, next)
   app.post('/api/deletefriend', async function(req, res, next)
   {
     // Gets input JSON
-    const { userID, friendID } = req.body;
+    const { userID, friendID, jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+    console.log(e.message);
+    }
 
     // Initializes error
     var error = '';
@@ -263,8 +314,19 @@ app.post('/api/addfriend', async function(req, res, next)
       error = 'Error. Current user does not exist.';
     }
 
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Return with error message
-    var ret = { error };
+    var ret = { error: error, jwtToken: refreshedToken };
     res.status(200).json(ret);
   });
 
@@ -274,7 +336,22 @@ app.post('/api/addfriend', async function(req, res, next)
   app.post('/api/searchnewfriends', async function(req, res, next)
   {
     // Gets input JSON
-    const { userID } = req.body;
+    const { userID, jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     // Initializes error
     var error = '';
@@ -289,8 +366,19 @@ app.post('/api/addfriend', async function(req, res, next)
     // Finds all the users except for the current user and their friends
     const users = await User.find({ userID: { $nin: friendsPlusUser} });
 
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Return with error message
-    var ret = {users, error};
+    var ret = {users: users, error: error, jwtToken: refreshedToken};
     res.status(200).json(ret);
   });
 
@@ -300,7 +388,22 @@ app.post('/api/addfriend', async function(req, res, next)
   app.post('/api/searchcurrentfriends', async function(req, res, next)
   {
     // Gets input JSON
-    const { userID } = req.body;
+    const { userID, jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     // Initializes error
     var error = '';
@@ -311,8 +414,19 @@ app.post('/api/addfriend', async function(req, res, next)
     // Finds all of the current user's friends
     const currentFriends = await User.find( {userID: {$in: currentUser.Friends} } );
 
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Return with error message
-    var ret = {currentFriends, error};
+    var ret = {currentFriends: currentFriends, error: error};
     res.status(200).json(ret);
   });
 
@@ -322,7 +436,22 @@ app.post('/api/addfriend', async function(req, res, next)
   app.post('/api/addscore', async function(req, res, next)
   {
     // Gets input JSON
-    const { userID, score } = req.body;
+    const { userID, score, jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     // Initializes error
     var error = '';
@@ -346,16 +475,19 @@ app.post('/api/addfriend', async function(req, res, next)
       error = 'Error adding new score';
     }
 
-    /*
-    if(score > currentUser.Highscore){
-        const filter = { userID:userID };
-        const update = { Highscore:score };
-        await User.findOneAndUpdate(filter, update);
-    } 
-    */
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
 
     // Return with error message
-    var ret = {error};
+    var ret = {error: error, jwtToken: refreshedToken};
     res.status(200).json(ret);
   });
 
@@ -365,7 +497,22 @@ app.post('/api/addfriend', async function(req, res, next)
   app.post('/api/showlocalleaderboard', async function(req, res, next)  
   {
     // Gets input JSON
-    const { userID } = req.body;
+    const { userID, jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
 
     // Initializes error
     var error = '';
@@ -380,8 +527,19 @@ app.post('/api/addfriend', async function(req, res, next)
     // Finds the scores of the current user and their friends
     const localScores = await Score.find( {userID: {$in: friendsPlusUser}} ).sort( {Score: -1 } );
 
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Return with error message
-    var ret = {localScores, error};
+    var ret = {localScores: localScores, error: error, jwtToken: refreshedToken};
     res.status(200).json(ret);
   });
 
@@ -390,14 +548,43 @@ app.post('/api/addfriend', async function(req, res, next)
   // Outgoing: username and scores of every user
   app.post('/api/showgloballeaderboard', async function(req, res, next)
   {
+    // Gets input JSON
+    const { jwtToken } = req.body;
+
+    // Checks if JWT is expired
+    try
+    {
+      if( token.isExpired(jwtToken))
+      {
+        var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        res.status(200).json(r);
+        return;
+      }
+    }
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Initializes error
     var error = '';
 
     // Finds every score
     const globalScores = await Score.find().sort( {Score: -1 } );
 
+    // Refreshes JWT
+    var refreshedToken = null;
+    try
+    {
+      refreshedToken = token.refresh(jwtToken);
+    }
+      catch(e)
+    {
+      console.log(e.message);
+    }
+
     // Return with error message
-    var ret = {globalScores, error};
+    var ret = {globalScores: globalScores, error: error, jwtToken: refreshedToken};
     res.status(200).json(ret);
   });
 }
