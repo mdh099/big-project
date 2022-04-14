@@ -7,10 +7,9 @@ public class Astroid : MonoBehaviour
     [SerializeField] public GameObject playerObj;
     [SerializeField] private float speed;
     [SerializeField] private float rotationMaxSpeed;
+    private Vector3 rotate;
 
     private AstroidTemplates templates;
-
-    private Vector3 rotate;
 
     void Start()
     {
@@ -50,6 +49,7 @@ public class Astroid : MonoBehaviour
             {
                 //Destroy bolt and get ran
                 Destroy(other.gameObject);
+                UIStuff.instance.AddPoints(10);
                 int rand = Random.Range(0, templates.AstroidsMedium.Length);
                 float randx = Random.Range(1.0f, 2.0f);
                 float randy = Random.Range(-0.5f, 0.5f);
@@ -73,8 +73,9 @@ public class Astroid : MonoBehaviour
             }
             if (gameObject.CompareTag("AsteroidMed"))
             {
-                //Destroy bolt and get ran
+                //Destroy bolt and get rand
                 Destroy(other.gameObject);
+                UIStuff.instance.AddPoints(15);
                 int rand = Random.Range(0, templates.AstroidsSmall.Length);
                 float randx = Random.Range(1.0f, 2.0f);
                 float randy = Random.Range(-0.5f, 0.5f);
@@ -100,6 +101,7 @@ public class Astroid : MonoBehaviour
             if (gameObject.CompareTag("AsteroidSmall"))
             {
                 //Destroy everything
+                UIStuff.instance.AddPoints(20);
                 Destroy(other.gameObject);
                 Destroy(gameObject);
                 Debug.Log("Bolt has destroied Small asteroid");
@@ -109,11 +111,3 @@ public class Astroid : MonoBehaviour
         }
     }
 }
-
-/* Notes
-    // Get direction from A to B
-    Vector3 posA = ObjectA.position;
-    Vector3 posB = ObjectB.position;
-    //Destination - Origin
-    Vector3 dir = (posB - posA).normalized;
- */

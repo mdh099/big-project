@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5610795399160439676}
   - component: {fileID: 5568531555562249860}
   - component: {fileID: 6536060014054101125}
-  - component: {fileID: 6536060014054101124}
-  - component: {fileID: 6536060014054101126}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -75,46 +73,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6536060014054101124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536060014054101123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fdc114b1ed7ab44a92ff872da714b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bolt: {fileID: 0}
-  fpsCam: {fileID: 0}
---- !u!114 &6536060014054101126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536060014054101123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9f73811bec7134e932634d747db3e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 8263257791350647365, guid: 8d390cc5232b68f47aff62214f7a096e, type: 3}
-  shootForce: 0
-  upwardForce: 0
-  timeBetweenShooting: 1
-  spread: 0
-  reloadTime: 0
-  timeBetweenShots: 1
-  magazineSize: 0
-  bulletsPerTap: 1
-  allowButtonHold: 1
-  playerRb: {fileID: 0}
-  recoilForce: 0
-  fpsCam: {fileID: 0}
-  attackPoint: {fileID: 350647195155734610}
-  muzzleFlash: {fileID: 0}
-  ammunitionDisplay: {fileID: 0}
-  allowInvoke: 1
