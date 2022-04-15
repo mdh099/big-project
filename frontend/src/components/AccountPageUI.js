@@ -18,6 +18,8 @@ function AccountPageUI()
     var firstName = ud.firstName;
     var lastName = ud.lastName;
 
+    var storage = require('../tokenStorage.js');
+
     /*
         const addCard = async event => 
         {
@@ -118,6 +120,10 @@ function AccountPageUI()
 
     const viewAccount = async event => 
     {
+
+        var tok = storage.retrieveToken();
+        var obj = {userID:userID,username:username,email:email};
+
         var accTab = document.getElementById("accountAccBtn");
         var passTab = document.getElementById("accountchangePassBtn");
         var mailTab = document.getElementById("accountchangeEmailBtn");

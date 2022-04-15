@@ -1,79 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import '../Login.css';
-import axios from 'axios';                        // JWT
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 function Login()
 {
-
     let bp = require('./Path.js');
-    var storage = require('../tokenStorage.js');  // JWT
+    var storage = require('../tokenStorage.js');
 
     var loginName;
     var loginPassword;
     const [message,setMessage] = useState('');
 
     const gotoRegister = async event =>
-        {
-            event.preventDefault();
-            try
-            {
-                window.location.href = '/register';
-
-            }
-            catch(e)
-            {
-                console.log(e.toString());
-                return;
-            }
-        };
-
-    const doLogin = async event => 
     {
-        console.log("IN DOLOGIN");
+        event.preventDefault();
+        try
+        {
+            window.location.href = '/register';
 
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }
+    };
+
+    const doLogin = async event =>
+    {
         event.preventDefault();
         var obj = {login:loginName.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
 
-         var config =
+        axios({
+        method: 'post',
+        url: bp.buildPath('api/login'),
+        headers:
         {
-            method: 'post',
-            url: bp.buildPath('api/login'),    // JWT
-            headers:
-            {
-                'Content-Type': 'application/json'
-            },
-            data: js
-        };
-
-        axios(config)
-            .then(function (response)
+            'Content-Type': 'application/json'
+        },
+        data: js
+        })
+        .then(function (response)
         {
             var res = response.data;
             if (res.error)
             {
-                setMessage('User/Password combination incorrect');
+                setMessage('Error: ' + res.error);
             }
             else
             {
                 storage.storeToken(res);
-                var jwt = require('jsonwebtoken');
+                var token = storage.retrieveToken();
 
-                var ud = jwt.decode(storage.retrieveToken(),{complete:true});
-                var userId = ud.payload.userId;
-                var firstName = ud.payload.firstName;
-                var lastName = ud.payload.lastName;
+                var ud = jwt_decode(token, {header:true});
 
-                var user = {firstName:firstName,lastName:lastName,id:userId}
+                var username = ud.payload.username;
+                var email = ud.payload.email;
+                var userID = ud.payload.userId;
+
+                setMessage('Logged in as ' + ud.payload.userId);
+
+                var user = {username:username, email:email, userID:userID};
                 localStorage.setItem('user_data', JSON.stringify(user));
-                window.location.href = '/cards';
+                window.location.href = '/account';
             }
         })
         .catch(function (error)
         {
             console.log(error);
+            setMessage('Error: ' + error);
         });
-
 
 //         try
 //         {
@@ -86,11 +84,17 @@ function Login()
 //             //---------------------------------------------------------------------------
 //             if(res.userID <= 0 || !res.IsVerified)
 //             {
-//                 setMessage('Login Failed. Ensure that Your Account is Verified');
+//                 setMessage('Login Failed -- Is your account verified? Check your email!');
 //             }
 //             else
 //             {                                             // Changed res.id to res.userID
-//                 var user = {username:res.username,id:res.userID, email:res.email}
+//                 storage.storeToken(res); // JWT
+//
+//                 let userID = res.userID;
+//                 let Username = res.Username;
+//                 let email = res.email;
+//
+//                 var user = {username:res.Username,id:res.userID, email:res.email}
 //                 // added next line for testing
 //                 console.log(user);
 //                 localStorage.setItem('user_data', JSON.stringify(user));

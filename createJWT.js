@@ -11,10 +11,10 @@ _createToken = function ( Username, email, userID )
       const expiration = new Date();
       const user = {userID:userID,Username:Username,email:email};
       const accessToken =  jwt.sign( user, process.env.ACCESS_TOKEN_SECRET);
-      // In order to exoire with a value other than the default, use the 
+      // In order to exoire with a value other than the default, use the
        // following
       /*
-      const accessToken= jwt.sign(user,process.env.ACCESS_TOKEN_SECRET, 
+      const accessToken= jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,
          { expiresIn: '30m'} );
                        '24h'
                       '365d'
@@ -29,7 +29,7 @@ _createToken = function ( Username, email, userID )
 }
 exports.isExpired = function( token )
 {
-   var isError = jwt.verify( token, process.env.ACCESS_TOKEN_SECRET, 
+   var isError = jwt.verify( token, process.env.ACCESS_TOKEN_SECRET,
      (err, verifiedJwt) =>
    {
      if( err )
