@@ -122,7 +122,7 @@ function AccountPageUI()
     {
 
         var tok = storage.retrieveToken();
-        var obj = {userID:userID,username:username,email:email};
+        //var obj = {userID:userID,username:username,email:email};
 
         var accTab = document.getElementById("accountAccBtn");
         var passTab = document.getElementById("accountchangePassBtn");
