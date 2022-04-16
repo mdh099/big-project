@@ -176,7 +176,7 @@ function AccountPageUI()
         </div>
     */
 
-    var username = ud.username; 
+    var username = ud.Username;
     var email = ud.email; 
 
 

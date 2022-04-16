@@ -46,8 +46,8 @@ exports.isExpired = function( token )
 exports.refresh = function( token )
 {
   var ud = jwt.decode(token,{complete:true});
-  var userID = ud.payload.userID;
-  var Username = ud.payload.Username;
-  var email = ud.payload.email;
+  var userID = ud.userID;
+  var Username = ud.Username;
+  var email = ud.email;
   return _createToken( Username, email, userID );
 }
