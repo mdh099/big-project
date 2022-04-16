@@ -20,7 +20,7 @@ const twilioClient = require("twilio")(
 
 const sendEmail = (reciever, id) => {
   try {
-    const link = `http://localhost:3000/reset/${id}`; 
+    const link = `https://cop4331-123.herokuapp.com/resetpassword/${id}`; 
     const data = {
       to: reciever,
       from: 'ARAsteroids@gmail.com', 
@@ -64,7 +64,7 @@ exports.setApp = function(app, client){
     const test = token.createToken(results.Username, results.email, results.userID);
     const id = test.accessToken; 
 
-    // Insert ResetTokens into the DB
+    // Insert ResetTokens into the DB, along with userID of the reqester. 
     const newReset = { userID: results.userID, ResetToken: id};
 
     try
@@ -81,47 +81,78 @@ exports.setApp = function(app, client){
     await sendEmail(email, id)
     
     return res.status(200).send({ message: "Email Successfully sent to your inbox."});
-
-    return res.status(200).send({error: error}); 
   });
 
+  app.post('/api/verifyreset', async function(req, res, next)
+  {
+    var error = '';
 
+    const { resetToken, password } = req.body;
 
-  //app.post('/api/driveresetlink', async function(req, res, next){
-  /*
-  async function sendResetLink(req, res, next) {
-    try {
-      const { email } = req.body; 
-      const user = User.findOne({where: { Username: email }});
-      
-      // validate.isEmail(email)
-      // Might need a validate function
+    // console.log("Reset-token: " + resetToken); 
+    // console.log("New-password: " + password); 
 
-      if(!user) {
-        return res.status(404).send({ error: 'User not found' }); 
+    try
+    {
+      if( token.isExpired(resetToken))
+      {
+        var r = {error:'The JWT is no longer valid', resetToken: ''};
+        res.status(200).json(r);
+        return;
       }
-      const token = jwtToken.createToken(user); 
-      const link = `${req.protocol}://${req.host}/reset_password/${token}`;
-
-      await sendEmail(
-        email,
-        'ARAsteroids@gmail.com',
-        'Password reset', 
-        `
-        <div>click the link below to reset your password. </div><br/> 
-        <div>${link}</div>
-        `
-      )
-      return res.status(200).send({ message: "Email Successfully sent to your inbox."});
-    } catch (e) {
-      console.log(e);
-      //return next(new Error(e));
-      //return error;  
-      return res.status(200).send(e); 
     }
-  }
-  */
+    catch(e)
+    {
+      console.log(e.message);
+    }
+
+    const results = await Reset.findOne({ ResetToken: resetToken});
+
+    var userID = -1;
+    var isVerified = false;
+
+    if(results)
+    {
+        userID = results.userID;
+        console.log("UserID: " + userID); 
+    }
+    else
+    {
+      var ret = {error:"Cannot not determine the validity of link, please request new link."};
+      res.status(200).json(ret);
+      return;
+    } 
+
+    const userResults = await User.findOne({ userID: userID});
+
+    if(!userResults){
+      console.log("account not found"); 
+      var r = {error:'Account not located in DB, please try again'};
+      res.status(200).json(r);
+      return;
+    }
+
+    // Now that we have confirmed the user, reset the new password they provided.
+    const filter = { userID: userID };
+    const update = {Password: password};
+
+    let doc = await User.findOneAndUpdate(filter, update);
+    doc.Password;
   
+    doc = await User.findOne(filter);
+    doc.Password; 
+
+    Reset.findOneAndDelete({ResetToken: resetToken}, function (err, docReset) {
+      if (err){
+        console.log(err)
+      } else {
+        console.log("Deleted old request in DB"); 
+      }
+    });
+
+    ret = { error: error}; 
+    res.status(200).json(ret);
+  });
 
   // Login
   // incoming: login, password
