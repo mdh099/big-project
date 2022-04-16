@@ -6,9 +6,9 @@ html{
 	box-shadow: inset 0px 0px 60px rgba(255, 255, 255, 0.6);
 }
 
-#AccountPageUI{
+/*#AccountPageUI{
 	background: white;
-}
+}*/
 
 #topGrayRect{
 	position: absolute;
@@ -27,8 +27,8 @@ a{
 	font-family: 'KoHo';
 	color: white;
 	text-decoration: none;
-	font-size: 30px;
-	vertical-align:middle
+	font-size: 38px; /* TEST ON OTHER BROWSERS AND SCREEN RATIOS*/
+	vertical-align:middle;
 }
 
 #accountMainBox{
@@ -48,7 +48,8 @@ a{
 	font-size: 30px;
 	font-family: 'KoHo';
 	padding-left: 5%;
-	padding-top: 2.5%
+	padding-top: 2.5%;
+	color: rgba(255, 255, 255, 0.69);
 }
 
 
