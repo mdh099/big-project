@@ -1,21 +1,127 @@
 require('express');
 require('mongodb');
 require('dotenv').config();
+
 var token = require('./createJWT.js');
 
 const { findOneAndReplace } = require('./models/user.js');
-//Load user model
+//Load models
 const User = require("./models/user.js");
 const Score = require("./models/score.js");
+const Reset = require("./models/reset.js");
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const twilioClient = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
 
+const sendEmail = (reciever, id) => {
+  try {
+    const link = `http://localhost:3000/reset/${id}`; 
+    const data = {
+      to: reciever,
+      from: 'ARAsteroids@gmail.com', 
+      subject: 'AR Asteroids Password Reset Request',
+      html:       
+      `
+      <div>Reset your password by clicking the time-sensitive link below. Dont worry, its valid for 24 hours! </div><br/> 
+      <div>${link}</div>
+      <div>
+          - From the team at AR Asteroids
+      `
+    };
+    return sgMail.send(data); 
+  } catch (e) {
+      console.log(e);
+      return new Error(e);
+  }
+};
+
 const verificationSID = process.env.TWILIO_VERIFY_SID;
 
 exports.setApp = function(app, client){
+
+  app.post('/api/forgotpassword', async function(req, res, next){
+    var error = '';
+
+    const { email } = req.body;
+
+    const results = await User.findOne({ email: email });
+
+    if(!results){
+      console.log("User not found!");
+      return res.status(404).json(ret = { error: "user not found"});
+    } else {
+      console.log("valid email address"); 
+      console.log("Username: " + results.Username); 
+    }
+
+    const token = require("./createJWT.js");
+
+    const test = token.createToken(results.Username, results.email, results.userID);
+    const id = test.accessToken; 
+
+    // Insert ResetTokens into the DB
+    const newReset = { userID: results.userID, ResetToken: id};
+
+    try
+    {
+      const result = await Reset.create(newReset);
+      console.log(result); 
+    }
+    catch(e)
+    {
+      error = e.toString();
+      console.log(error); 
+    }
+
+    await sendEmail(email, id)
+    
+    return res.status(200).send({ message: "Email Successfully sent to your inbox."});
+
+    return res.status(200).send({error: error}); 
+  });
+
+
+
+  //app.post('/api/driveresetlink', async function(req, res, next){
+  /*
+  async function sendResetLink(req, res, next) {
+    try {
+      const { email } = req.body; 
+      const user = User.findOne({where: { Username: email }});
+      
+      // validate.isEmail(email)
+      // Might need a validate function
+
+      if(!user) {
+        return res.status(404).send({ error: 'User not found' }); 
+      }
+      const token = jwtToken.createToken(user); 
+      const link = `${req.protocol}://${req.host}/reset_password/${token}`;
+
+      await sendEmail(
+        email,
+        'ARAsteroids@gmail.com',
+        'Password reset', 
+        `
+        <div>click the link below to reset your password. </div><br/> 
+        <div>${link}</div>
+        `
+      )
+      return res.status(200).send({ message: "Email Successfully sent to your inbox."});
+    } catch (e) {
+      console.log(e);
+      //return next(new Error(e));
+      //return error;  
+      return res.status(200).send(e); 
+    }
+  }
+  */
+  
 
   // Login
   // incoming: login, password
@@ -65,18 +171,17 @@ exports.setApp = function(app, client){
     } 
   });
 
-
   // Registration
   // Change so, it returns an error if that username already exists
   // incoming: Username, Password, email, 
   // (maybe not) outgoing: id, error 
   app.post('/api/registration', async function(req, res, next)
   {
+    var error = '';
+
     const { login, password, email } = req.body;
 
     const newUser = {Username:login, Password:password, email:email, IsVerified: false, EmailToken: null};
-
-    var error = '';
 
     try
     {
@@ -94,6 +199,7 @@ exports.setApp = function(app, client){
             .verifications
             .create({channelConfiguration: {
                     template_id: 'd-db4824d7f6cd4adcab81570907256a41',
+                    subject: 'Verification code',
                     from: 'ARAsteroids@gmail.com',
                     from_name: 'Team at AR-Asteroids'
                     }, to: email, channel: "email" })
