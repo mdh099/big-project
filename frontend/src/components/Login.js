@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import '../Login.css';
 import axios from 'axios';
-import jwt_decode from "jwt-decode";
 
 function Login()
 {
@@ -27,11 +26,25 @@ function Login()
         }
     };
 
+    function jwtDecode(t)
+    {
+        let token = {};
+        token.raw = t;
+        token.header = JSON.parse(window.atob(t.split('.')[0]));
+        token.payload = JSON.parse(window.atob(t.split('.')[1]));
+        return (token)
+    }
+
     const doLogin = async event =>
     {
         event.preventDefault();
         var obj = {login:loginName.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
+        var res;
+
+        console.log(loginName.value);
+        console.log(loginPassword.value);
+        console.log(JSON.stringify(obj));
 
         axios({
         method: 'post',
@@ -44,33 +57,38 @@ function Login()
         })
         .then(function (response)
         {
-            var res = response.data;
+            res = response.data;
             if (res.error)
             {
                 setMessage('Error: ' + res.error);
             }
-            else
+            else if (res)
             {
+                console.log(res);
                 storage.storeToken(res);
                 var token = storage.retrieveToken();
 
-                var ud = jwt_decode(token, {header:true});
+                //var ud = jwt_decode(token, {header:true});
+                var ud = JSON.parse(window.atob(token.split('.')[1]));
 
-                var username = ud.payload.username;
-                var email = ud.payload.email;
-                var userID = ud.payload.userId;
+                console.log(ud);
 
-                setMessage('Logged in as ' + ud.payload.userId);
+                var Username = ud.Username;
+                var email = ud.email;
+                var userID = ud.userID;
 
-                var user = {username:username, email:email, userID:userID};
+                setMessage('Logged in as ' + ud.Username);
+
+                var user = {Username:Username, email:email, userID:userID};
                 localStorage.setItem('user_data', JSON.stringify(user));
                 window.location.href = '/account';
             }
         })
         .catch(function (error)
         {
+            console.log(res);
             console.log(error);
-            setMessage('Error: ' + error);
+            setMessage('Critical Error: ' + error);
         });
 
 //         try

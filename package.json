@@ -23,6 +23,7 @@
     "mongoose": "^6.2.10",
     "mongoose-int32": "^0.6.0",
     "react-scripts": "^5.0.0",
+    "sendgrid": "^5.2.3",
     "stream-browserify": "^3.0.0",
     "trim": "^1.0.1",
     "twilio": "^3.76.1",

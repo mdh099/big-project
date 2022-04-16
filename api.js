@@ -27,7 +27,7 @@ const sendEmail = (reciever, id) => {
       subject: 'AR Asteroids Password Reset Request',
       html:       
       `
-      <div>Reset your password by clicking the time-sensitive link below. Dont worry, its valid for 24 hours! </div><br/> 
+      <div>Reset your password by clicking the time-sensitive link below. Don't worry, it's valid for 24 hours! </div><br/>
       <div>${link}</div>
       <div>
           - From the team at AR Asteroids
