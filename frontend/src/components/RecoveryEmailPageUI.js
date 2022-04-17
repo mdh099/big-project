@@ -41,47 +41,47 @@ function RecoveryEmailPageUI()
 
     const passwordReset = async event =>
     {
+        url = window.location.href;
 
+        token = url.substring(url.lastIndexOf('/') + 1);
+        console.log(token);
 
-        token = url;
-        console.log();
+        event.preventDefault();
+        var obj = {"resetToken":token, password:newPassword.value};
 
-//         event.preventDefault();
-//         var obj = {"resetToken":token, password:newPassword.value};
-//
-//         var js = JSON.stringify(obj);
-//         try
-//         {
-//             const response = await fetch(buildPath('api/verifyreset'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-//
-//             var res = JSON.parse(await response.text());
-//
-//             console.log(res.error);
-//             console.log(res.message);
-//
-//             if( res.error !== "" )
-//             {
-//                 if (obj.newPassword == "")
-//                 {
-//                     setMessage('Enter a new password');
-//                 }
-//                 else
-//                 {
-//                     setMessage('Error: ' + res.error);
-//                 }
-//             }
-//
-//             if (res.message !== "")
-//             {
-//                 setMessage('Success!');
-//                 //window.location.href = '/login';
-//             }
-//         }
-//         catch(e)
-//         {
-//             console.log(e.toString());
-//             return;
-//         }
+        var js = JSON.stringify(obj);
+        try
+        {
+            const response = await fetch(buildPath('api/verifyreset'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+
+            var res = JSON.parse(await response.text());
+
+            console.log(res.error);
+            console.log(res.message);
+
+            if( res.error !== "" )
+            {
+                if (obj.newPassword == "")
+                {
+                    setMessage('Enter a new password');
+                }
+                else
+                {
+                    setMessage('Error: ' + res.error);
+                }
+            }
+
+            if (res.message !== "")
+            {
+                setMessage('Success!');
+                //window.location.href = '/login';
+            }
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }
     };
 
     return (
@@ -112,7 +112,7 @@ function RecoveryEmailPageUI()
         <span id="loginResult">{message}</span>
         <br/>
         <br/>
-        <loginLink id="gotoVerifyLink" onClick={gotoLogin} >Remember your password?</loginLink>
+        <loginLink id="gotoVerifyLink" onClick={gotoLogin} >Log In</loginLink>
 
         </div>
     );
