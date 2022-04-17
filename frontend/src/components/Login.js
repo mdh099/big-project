@@ -57,6 +57,10 @@ function Login()
         var js = JSON.stringify(obj);
         var res;
 
+        console.log(loginName.value);
+        console.log(loginPassword.value);
+        console.log(JSON.stringify(obj));
+
         axios({
         method: 'post',
         url: bp.buildPath('api/login'),
@@ -68,6 +72,7 @@ function Login()
         })
         .then(function (response)
         {
+            console.log("HERERE");
             res = response.data;
             if (res.error)
             {
@@ -75,11 +80,14 @@ function Login()
             }
             else if (res)
             {
+                console.log(res);
                 storage.storeToken(res);
                 var token = storage.retrieveToken();
 
                 //var ud = jwt_decode(token, {header:true});
                 var ud = JSON.parse(window.atob(token.split('.')[1]));
+
+                console.log(ud);
 
                 var Username = ud.Username;
                 var email = ud.email;
