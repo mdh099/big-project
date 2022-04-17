@@ -13,6 +13,7 @@ import ChangePasswordPage from './pages/ChangePasswordPage';
 import ChangeEmailPage from './pages/ChangeEmailPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import RecoveryEmailPage from './pages/RecoveryEmailPage';
+import DeleteAccountPage from './pages/DeleteAccountPage';
 
 function App() {
   return (
@@ -65,6 +66,10 @@ function App() {
 
         <Route path="/resetpassword">
           <RecoveryEmailPage />
+        </Route>
+
+        <Route path="/deleteaccount">
+          <DeleteAccountPage />
         </Route>
 
         <Redirect to="/" />
