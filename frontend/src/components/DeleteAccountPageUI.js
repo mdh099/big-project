@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ChangePasswordPageUI.css';
 import axios from 'axios';
+var md5 = require('md5');
 
 function DeleteAccountPageUI()
 {
@@ -96,11 +97,11 @@ function DeleteAccountPageUI()
     const doLogin = async event =>
     {
         event.preventDefault();
-        var obj = {login:userName.value,password:accountPassword.value};
+        var obj = {login:userName.value,password:md5(accountPassword.value)};
         var js = JSON.stringify(obj);
 
         console.log(userName.value);
-        console.log(accountPassword.value);
+        console.log(md5(accountPassword.value));
         console.log(JSON.stringify(obj));
 
         axios({

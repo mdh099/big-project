@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ChangePasswordPageUI.css';
 import axios from 'axios';
+var md5 = require('md5');
 
 function ChangePasswordPageUI()
 {
@@ -58,7 +59,7 @@ function ChangePasswordPageUI()
 
         console.log(res);
 
-        var obj2 = {login:username, password:newPassword.value, email:email, jwtToken:token};
+        var obj2 = {login:username, password:md5(newPassword.value), email:email, jwtToken:token};
 
         var js2 = JSON.stringify(obj2);
         console.log(obj2);
@@ -95,7 +96,7 @@ function ChangePasswordPageUI()
     const doLogin = async event =>
     {
         event.preventDefault();
-        var obj = {login:username,password:loginPassword.value};
+        var obj = {login:username,password:md5(loginPassword.value)};
         var js = JSON.stringify(obj);
 
         console.log(username.value);
@@ -139,50 +140,6 @@ function ChangePasswordPageUI()
             setMessage('Critical Error: ' + error);
         });
 
-
-//         try
-//         {
-//             const response = await fetch(bp.buildPath('api/login'),
-//                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-//             var res = JSON.parse(await response.text());
-//
-//             if(res.userID <= 0)
-//             {
-//                 setMessage('Old Password for ' + username + ' Incorrect');
-//             }
-//             else
-//             {
-//                 var obj2 = {login:username, password:newPassword.value, email:email};
-//
-//                 var js2 = JSON.stringify(obj2);
-//
-//                 try
-//                 {
-//                     const response2 = await fetch(bp.buildPath('api/editaccount'), {method:'POST', body:js2, headers:{'Content-Type': 'application/json'}});
-//
-//                     var res2 = JSON.parse(await response2.text());
-//
-//                     if (res2.error !== "")
-//                     {
-//                         setMessage('Error Updating Password');
-//                     }
-//                     else
-//                     {
-//                         setMessage('Password Updated');
-//                     }
-//                 }
-//                 catch(e)
-//                 {
-//                     console.log(e.toString());
-//                     return;
-//                 }
-//             }
-//         }
-//         catch(e)
-//         {
-//             console.log(e.toString());
-//             return;
-//         }
     };
     return(
       <div id="changePasswordDiv">

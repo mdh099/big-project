@@ -127,58 +127,6 @@ function Login()
         }    
     };
 
-    /*const doLogin = async event => 
-    {
-        event.preventDefault();
-        var obj = {login:loginName.value,password:loginPassword.value};
-        var js = JSON.stringify(obj);
-        try
-        {    
-            const response = await fetch(bp.buildPath('api/login'),
-                {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-            var res = JSON.parse(await response.text());
-            //---------------------------------------------------------------------------
-            if(res.userID <= 0)
-            {
-                setMessage('Login Failed');
-            }
-            else
-            {                                             // Changed res.id to res.userID
-                var user = {username:res.username,id:res.userID, email:res.email}
-                // added next line for testing
-                console.log(user);
-                localStorage.setItem('user_data', JSON.stringify(user));
-                setMessage('');
-                window.location.href = '/account';
-            }
-            //------------------------------------------------------------------------
-        }
-        catch(e)
-        {
-            console.log(e.toString());
-            return;
-        }    
-    };*/
-
-    /*
-        <form onSubmit={doVerify}>
-
-        <div class="grid-container">
-            <div class="userG">
-                <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} />
-            </div>
-            <div class="passG">
-                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
-            </div>
-            <div class="emailG">
-                <input type="submit" id="loginButton" class="buttons" value = ""
-                onClick={doLogin} />
-            </div>
-        </div>
-
-        </form>
-    */
-
     return(
       <div id="emailConfirmDiv">
 

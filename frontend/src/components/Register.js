@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../Register.css';
+var md5 = require('md5');
 
 function Register()
 {
@@ -57,11 +58,13 @@ function Register()
      const doRegister = async event => 
     {
         event.preventDefault();
-        var obj = {login:RegisterName.value, password:RegisterPassword.value, email: RegisterEmail.value};
+        var obj = {login:RegisterName.value, password:md5(RegisterPassword.value), email: RegisterEmail.value};
+
+        console.log(md5(RegisterPassword.value));
 
         var js = JSON.stringify(obj);
         try
-        {    
+        {
             const response = await fetch(buildPath('api/registration'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             var res = JSON.parse(await response.text());
@@ -72,7 +75,7 @@ function Register()
                 {
                     setMessage('Please Fill out All Fields');
                 }
-                else 
+                else
                     setMessage('Username Already In Use');
             }
             else
@@ -85,7 +88,7 @@ function Register()
         {
             console.log(e.toString());
             return;
-        }    
+        }
     };
 
     return(
