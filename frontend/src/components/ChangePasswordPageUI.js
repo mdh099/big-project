@@ -35,6 +35,21 @@ function ChangePasswordPageUI()
         }
     };
 
+    const gotoPasswordReset = async event =>
+    {
+        event.preventDefault();
+        try
+        {
+            window.location.href = '/passwordreset';
+
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }
+    };
+
     const updateAccount = async event =>
     {
         var Username = ud.Username;
@@ -198,7 +213,7 @@ function ChangePasswordPageUI()
         <span id="loginResult">{message}</span>
         <br/>
         <br/>
-        <createLnk id="inner-title" onClick={gotoRegister}>Forgot Password?</createLnk>
+        <createLnk id="inner-title" onClick={gotoPasswordReset}>Forgot Password?</createLnk>
      </div>
     );
 };

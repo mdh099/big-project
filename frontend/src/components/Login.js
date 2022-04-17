@@ -26,6 +26,21 @@ function Login()
         }
     };
 
+    const gotoPasswordReset = async event =>
+    {
+        event.preventDefault();
+        try
+        {
+            window.location.href = '/passwordreset';
+
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }
+    };
+
     function jwtDecode(t)
     {
         let token = {};
@@ -154,7 +169,7 @@ function Login()
         <createLnk id="inner-title" onClick={gotoRegister}>Create Account</createLnk>
         <br/>
         <br/>
-        <resetLnk id="inner-title">Reset Password</resetLnk>
+        <resetLnk id="inner-title" onClick={gotoPasswordReset}>Reset Password</resetLnk>
      </div>
     );
 };

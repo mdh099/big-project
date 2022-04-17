@@ -11,6 +11,8 @@ import FriendsPage from './pages/FriendsPage';
 import EmailConfirmPage from './pages/EmailConfirmPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ChangeEmailPage from './pages/ChangeEmailPage';
+import PasswordResetPage from './pages/PasswordResetPage';
+import RecoveryEmailPage from './pages/RecoveryEmailPage';
 
 function App() {
   return (
@@ -41,7 +43,7 @@ function App() {
           <LeaderboardPage />
         </Route>
 
-	<Route path="/changepassword" exact>
+        <Route path="/changepassword" exact>
           <ChangePasswordPage />
         </Route>
 
@@ -55,6 +57,14 @@ function App() {
 
         <Route path="/emailConfirm" exact>
           <EmailConfirmPage />
+        </Route>
+
+        <Route path="/passwordreset" exact>
+          <PasswordResetPage />
+        </Route>
+
+        <Route path="/resetpassword">
+          <RecoveryEmailPage />
         </Route>
 
         <Redirect to="/" />
