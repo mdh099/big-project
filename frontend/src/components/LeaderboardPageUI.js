@@ -18,6 +18,10 @@ function LeaderboardPageUI()
     var Arr;
     var del;
 
+    var storage = require('../tokenStorage.js');
+    var username = ud.Username;
+    var email = ud.email;
+
     const [message,setMessage] = useState('');
 
     var readyToRender = true;
@@ -27,7 +31,7 @@ function LeaderboardPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -35,8 +39,6 @@ function LeaderboardPageUI()
             const response = await fetch(bp.buildPath('api/showlocalleaderboard'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
-
-            console.log(res);
 
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
@@ -111,7 +113,7 @@ function LeaderboardPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -119,7 +121,6 @@ function LeaderboardPageUI()
             const response = await fetch(bp.buildPath('api/showgloballeaderboard'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
-            console.log(res);
 
             if(res.userID <= 0)
             {

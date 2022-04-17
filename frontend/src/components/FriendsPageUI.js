@@ -9,14 +9,14 @@ function FriendsPageUI()
     var _ud = localStorage.getItem('user_data');
     var ud = JSON.parse(_ud);
 
-    var SearchingName;
-
     var onNewFriends = false;
     var currPage = 1;
-    var totalPages = 1;
 
     var friendsArr;
-    var del;
+
+    var storage = require('../tokenStorage.js');
+    var username = ud.Username;
+    var email = ud.email;
 
     // usersShown will hold ID's of the current friends that are shown on the table
     var usersShown = {
@@ -33,7 +33,7 @@ function FriendsPageUI()
     {
         event.preventDefault();
 
-        var obj = {userID: ud.id, friendID: usersShown[ID]};
+        var obj = {userID: ud.userID, friendID: usersShown[ID], jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -64,7 +64,7 @@ function FriendsPageUI()
     {
         event.preventDefault();
 
-        var obj = {userID: ud.id, friendID: usersShown[ID]};
+        var obj = {userID: ud.userID, friendID: usersShown[ID], jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -95,7 +95,7 @@ function FriendsPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -163,7 +163,6 @@ function FriendsPageUI()
                     document.getElementById("nextPageBtn").style.visibility = "hidden";
                 }
 
-                totalPages = friendsArr.length / 6;
                 currPage = 1;
 
             }
@@ -183,7 +182,7 @@ function FriendsPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -225,7 +224,6 @@ function FriendsPageUI()
                 for (var i = currPage * 6 - 6; i < (currPage*6) && i < friendsArr.length; i++)
                 {
                     // we render the table rows individually, and fill usersShown object with the ID's of the friends that are now displayed
-                    console.log("I is " + i);
                     
                     usersShown[i] = friendsArr[i].userID;
 
@@ -250,7 +248,6 @@ function FriendsPageUI()
                     document.getElementById("nextPageBtn").style.visibility = "hidden";
                 }
 
-                totalPages = friendsArr.length / 6;
 
             }
             //------------------------------------------------------------------------
@@ -276,7 +273,7 @@ function FriendsPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -344,7 +341,6 @@ function FriendsPageUI()
                     document.getElementById("nextPageBtn").style.visibility = "hidden";
                 }
 
-                totalPages = friendsArr.length / 6;
             }
 
             currPage = 1;
@@ -363,7 +359,7 @@ function FriendsPageUI()
 
         event.preventDefault();
 
-        var obj = {userID: ud.id};
+        var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
 
         try
@@ -432,7 +428,6 @@ function FriendsPageUI()
                     document.getElementById("nextPageBtn").style.visibility = "hidden";
                 }
 
-                totalPages = friendsArr.length / 6;
             }
 
             //------------------------------------------------------------------------
