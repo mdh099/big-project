@@ -59,7 +59,7 @@ function DeleteAccountPageUI()
 
         console.log(res);
 
-        var obj2 = {deleteaccount:Username};
+        var obj2 = {userID:userID};
 
         var js2 = JSON.stringify(obj2);
         console.log(obj2);
