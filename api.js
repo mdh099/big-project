@@ -89,9 +89,6 @@ exports.setApp = function(app, client){
 
     const { resetToken, password } = req.body;
 
-    // console.log("Reset-token: " + resetToken); 
-    // console.log("New-password: " + password); 
-
     try
     {
       if( token.isExpired(resetToken))
@@ -214,6 +211,7 @@ exports.setApp = function(app, client){
 
     const newUser = {Username:login, Password:password, email:email, IsVerified: false, EmailToken: null};
 
+    // Changed catch to return an error if it gets the duplicate account message
     try
     {
       const result = await User.create(newUser);
@@ -221,11 +219,13 @@ exports.setApp = function(app, client){
     catch(e)
     {
       error = e.toString();
+      // console.log(error);
     }
 
-    console.log("Will now create verification code");
-    // Create the verification code
-    twilioClient.verify
+    if(!error){
+      console.log("Will now create verification code");
+      // Create the verification code
+      twilioClient.verify
             .services(verificationSID)
             .verifications
             .create({channelConfiguration: {
@@ -235,15 +235,12 @@ exports.setApp = function(app, client){
                     from_name: 'Team at AR-Asteroids'
                     }, to: email, channel: "email" })
             .then(verification => { console.log(verification.sid);
-              // app.get("/verify", (req, res) => {
-              //     email: req.query.email; 
-              // });
-              // res.redirect(/verify?email=${email});
             })
             .catch(error => {
               console.log("Caught error, uncomment next line to see it.");
               console.log(error);
             });
+    }
 
     var ret = { error: error};
     res.status(200).json(ret);
