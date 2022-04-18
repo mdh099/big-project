@@ -381,8 +381,35 @@ exports.setApp = function(app, client){
       res.status(200).json(ret);
     });
 
+// Display Highscore
+// Incoming: userID(current user) 
+// Outgoing: highscore, error message
+app.post('/api/displayhighscore', async function(req, res, next)  
+{
+  // Gets input JSON
+  const { userID } = req.body;
+
+  // Initializes highscore and error
+  var highscore = 0;
+  var error = '';
+
+  // Attempts to find the current user
+  const currentUser = await User.findOne({ userID:userID });
+
+  // If-else statement to catch errors
+  if(currentUser){ // Error if current user doesn't exist
+    highscore = currentUser.Highscore;
+  }else{
+    error = 'Error. Current user does not exist.';
+  }
+
+  // Return with error message
+  var ret = { highscore: highscore, error: error };
+  res.status(200).json(ret);
+});
+
 // Add Friend
-// Incoming: userID(current user), friendID(friend to add)  
+// Incoming: userID(current user), friendID(friend to add), jwtToken  
 // Outgoing: error message
 app.post('/api/addfriend', async function(req, res, next)  
 {
@@ -444,7 +471,7 @@ app.post('/api/addfriend', async function(req, res, next)
 });
 
   // Delete Friend
-  // Incoming: userID(current user logged in), friendID(friend to delete)
+  // Incoming: userID(current user logged in), friendID(friend to delete), jwtToken 
   // Outgoing: error message
   app.post('/api/deletefriend', async function(req, res, next)
   {
@@ -500,7 +527,7 @@ app.post('/api/addfriend', async function(req, res, next)
   });
 
   // Search for friends to add
-  // Incoming: userID(current user logged in)
+  // Incoming: userID(current user logged in), jwtToken 
   // Outgoing: users(list of all possible accounts for user to befriend), error message
   app.post('/api/searchnewfriends', async function(req, res, next)
   {
@@ -552,7 +579,7 @@ app.post('/api/addfriend', async function(req, res, next)
   });
 
   // Search current friends
-  // incoming: userID(current user logged in)
+  // incoming: userID(current user logged in), jwtToken 
   // outgoing: users(current user's friends), error message
   app.post('/api/searchcurrentfriends', async function(req, res, next)
   {
@@ -601,26 +628,11 @@ app.post('/api/addfriend', async function(req, res, next)
 
   // Add new score
   // Incoming: userID, score
-  // Outgoing: N/A
+  // Outgoing: error
   app.post('/api/addscore', async function(req, res, next)
   {
     // Gets input JSON
-    const { userID, score, jwtToken } = req.body;
-
-    // Checks if JWT is expired
-    try
-    {
-      if( token.isExpired(jwtToken))
-      {
-        var r = {error:'The JWT is no longer valid', jwtToken: ''};
-        res.status(200).json(r);
-        return;
-      }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+    const { userID, score } = req.body;
 
     // Initializes error
     var error = '';
@@ -644,24 +656,13 @@ app.post('/api/addfriend', async function(req, res, next)
       error = 'Error adding new score';
     }
 
-    // Refreshes JWT
-    var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-      catch(e)
-    {
-      console.log(e.message);
-    }
-
     // Return with error message
-    var ret = {error: error, jwtToken: refreshedToken};
+    var ret = {error: error};
     res.status(200).json(ret);
   });
 
   // Show local leaderboard
-  // Incoming: userID(current user logged in)
+  // Incoming: userID(current user logged in), jwtToken 
   // Outgoing: username and scores of the current user every user that the current user is friends with
   app.post('/api/showlocalleaderboard', async function(req, res, next)  
   {
@@ -713,7 +714,7 @@ app.post('/api/addfriend', async function(req, res, next)
   });
 
   // Show global leaderboard
-  // Incoming: N/A
+  // Incoming: jwtToken 
   // Outgoing: username and scores of every user
   app.post('/api/showgloballeaderboard', async function(req, res, next)
   {
