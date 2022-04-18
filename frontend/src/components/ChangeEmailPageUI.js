@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ChangeEmailPageUI.css';
 import axios from 'axios';
+var md5 = require('md5');
 
 function ChangeEmailPageUI()
 {
@@ -58,7 +59,7 @@ function ChangeEmailPageUI()
 
         console.log(res);
 
-        var obj2 = {login:username, password:loginPassword.value, email:newEmail.value, jwtToken:token};
+        var obj2 = {login:username, password:md5(loginPassword.value), email:newEmail.value, jwtToken:token};
 
         var js2 = JSON.stringify(obj2);
         console.log(obj2);
@@ -95,7 +96,7 @@ function ChangeEmailPageUI()
     const doLogin = async event =>
     {
         event.preventDefault();
-        var obj = {login:username,password:loginPassword.value};
+        var obj = {login:username,password:md5(loginPassword.value)};
         var js = JSON.stringify(obj);
 
         console.log(username.value);

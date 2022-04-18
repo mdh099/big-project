@@ -3,7 +3,7 @@ import './ChangePasswordPageUI.css';
 import axios from 'axios';
 var md5 = require('md5');
 
-function ChangePasswordPageUI()
+function DeleteAccountPageUI()
 {
 
     // Retrieve User Data
@@ -17,8 +17,8 @@ function ChangePasswordPageUI()
 
     let bp = require('./Path.js');
 
-    var newPassword;
-    var loginPassword;
+    var accountPassword;
+    var userName;
     const [message,setMessage] = useState('');
 
     const gotoRegister = async event =>
@@ -59,14 +59,14 @@ function ChangePasswordPageUI()
 
         console.log(res);
 
-        var obj2 = {login:username, password:md5(newPassword.value), email:email, jwtToken:token};
+        var obj2 = {userID:userID};
 
         var js2 = JSON.stringify(obj2);
         console.log(obj2);
 
         try
         {
-            const response2 = await fetch(bp.buildPath('api/editaccount'), {method:'POST', body:js2, headers:{'Content-Type': 'application/json'}}); // await fetch
+            const response2 = await fetch(bp.buildPath('api/deleteaccount'), {method:'POST', body:js2, headers:{'Content-Type': 'application/json'}}); // await fetch
 
             console.log(response2);
 
@@ -77,13 +77,14 @@ function ChangePasswordPageUI()
 
             if (res2.error !== "")
             {
-                setMessage('Error Updating Password: ' + res2.error);
+                setMessage('Error Deleting Account: ' + res2.error);
             }
             else
             {
                 var user = {Username:Username, email:email, userID:userID};
                 localStorage.setItem('user_data', JSON.stringify(user));
-                setMessage('Password Updated');
+                setMessage('Account Deleted!');
+                window.location.href = '/';
             }
         }
         catch(e)
@@ -96,11 +97,11 @@ function ChangePasswordPageUI()
     const doLogin = async event =>
     {
         event.preventDefault();
-        var obj = {login:username,password:md5(loginPassword.value)};
+        var obj = {login:userName.value,password:md5(accountPassword.value)};
         var js = JSON.stringify(obj);
 
-        console.log(username.value);
-        console.log(loginPassword.value);
+        console.log(userName.value);
+        console.log(md5(accountPassword.value));
         console.log(JSON.stringify(obj));
 
         axios({
@@ -147,16 +148,16 @@ function ChangePasswordPageUI()
         <form onSubmit={doLogin}>
 
         <div id = "accInfo">
-                Changing password for: {username}
+                Deleting Account: {username}
         </div>
         <br/>
 
         <div class="grid-container">
             <div class="passG">
-                <input type="password" id="loginPassword" placeholder="Old Password" ref={(c) => loginPassword = c} />
+                <input type="text" id="loginPassword" placeholder="Username" ref={(c) => userName = c} />
             </div>
             <div class="passG">
-                <input type="password" id="loginPassword" placeholder="New Password" ref={(c) => newPassword = c} />
+                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => accountPassword = c} />
             </div>
             <div class="emailG">
                 <input type="submit" id="loginButton" class="buttons" value = "▷"
@@ -174,4 +175,4 @@ function ChangePasswordPageUI()
      </div>
     );
 };
-export default ChangePasswordPageUI;
+export default DeleteAccountPageUI;

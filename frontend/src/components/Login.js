@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import '../Login.css';
 import axios from 'axios';
+var md5 = require('md5');
 
 function Login()
 {
@@ -53,7 +54,7 @@ function Login()
     const doLogin = async event =>
     {
         event.preventDefault();
-        var obj = {login:loginName.value,password:loginPassword.value};
+        var obj = {login:loginName.value,password:md5(loginPassword.value)};
         var js = JSON.stringify(obj);
         var res;
 
@@ -72,6 +73,7 @@ function Login()
         })
         .then(function (response)
         {
+            console.log("HERERE");
             res = response.data;
             if (res.error)
             {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PasswordResetPageUI.css';
+var md5 = require('md5');
 
 function RecoveryEmailPageUI()
 {
@@ -47,7 +48,7 @@ function RecoveryEmailPageUI()
         console.log(token);
 
         event.preventDefault();
-        var obj = {"resetToken":token, password:newPassword.value};
+        var obj = {"resetToken":token, password:md5(newPassword.value)};
 
         var js = JSON.stringify(obj);
         try
