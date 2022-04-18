@@ -42,7 +42,7 @@
 .leaderboard {
   position: relative;
   z-index: 1000;
-  font-size: 100%;
+  font-size: max(24px,2vw);
 }
 
 #btnforAccountDrop{
@@ -125,4 +125,8 @@
   opacity: 1;
   pointer-events: all;
   transform: translateY(0px);
+}
+
+.friends, .download, .leaderboard, .logout, .account, #btnforAccountDrop{
+	font-size: max(24px,2vw);
 }

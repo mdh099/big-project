@@ -36,8 +36,6 @@ const TopBar = () =>
 
         <button id="btnforboards"><a href="/leaderboard" class="leaderboard">Leaderboards</a></button>
 
-
-
         <button id="friends"><a href="/friends" class="friends">Friends</a></button>
 
         <button id="logout" onClick={doLogout}><a href="/" class="logout">Log Out</a></button>

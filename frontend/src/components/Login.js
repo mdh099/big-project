@@ -73,7 +73,6 @@ function Login()
         })
         .then(function (response)
         {
-            console.log("HERERE");
             res = response.data;
             if (res.error)
             {
@@ -81,14 +80,12 @@ function Login()
             }
             else if (res)
             {
-                console.log(res);
                 storage.storeToken(res);
                 var token = storage.retrieveToken();
 
                 //var ud = jwt_decode(token, {header:true});
                 var ud = JSON.parse(window.atob(token.split('.')[1]));
 
-                console.log(ud);
 
                 var Username = ud.Username;
                 var email = ud.email;

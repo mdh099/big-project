@@ -104,6 +104,8 @@ function FriendsPageUI()
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());
 
+            console.log(res);
+
             //---------------------------------------------------------------------------
             if(res.userID <= 0)
             {
@@ -131,9 +133,21 @@ function FriendsPageUI()
                 }
 
                 onNewFriends = false;
+
+                if (friendsArr.length == 0)
+                {
+
+                }
                 
                 // we get the table and clear it of previous rows
                 var table = document.getElementById("usersTable");
+
+                if (friendsArr.length == 0)
+                {
+                    table.innerHTML = "Looks like you don't have any friends yet. You can make some by clicking 'Find New Friends'";
+                    return;
+                }
+
                 table.innerHTML = "<thead><tr><th id='nameTh'>Name</th><th id='secondTh'>" +
                     "High Score </th></tr></thead>"
 
@@ -147,7 +161,7 @@ function FriendsPageUI()
 
                     row.insertCell().innerHTML = friendsArr[i].Username;
 
-                    row.insertCell().innerHTML = 0;//friend.Scores[0].current_score;
+                    row.insertCell().innerHTML = friendsArr[i].Highscore;
                 };
 
                 // we don't want to have the arrows if there is only one page, so we get rid of them if 
@@ -231,7 +245,7 @@ function FriendsPageUI()
 
                     row.insertCell().innerHTML = friendsArr[i].Username;
 
-                    row.insertCell().innerHTML = 0;//friend.Scores[0].current_score;
+                    row.insertCell().innerHTML = friendsArr[i].Highscore;
 
                     if (i < friendsArr.length)
                         del[i%6].style.visibility = "visible";
@@ -326,7 +340,7 @@ function FriendsPageUI()
 
                     row.insertCell().innerHTML = friendsArr[i].Username;
    
-                    row.insertCell().innerHTML = 0;//friendsArr[i].Scores[0].current_score;
+                    row.insertCell().innerHTML = friendsArr[i].Highscore;
                 }
 
                 // if the list is only one page, we do not want to have arrows to change page
@@ -410,7 +424,7 @@ function FriendsPageUI()
 
                     row.insertCell().innerHTML = friendsArr[i].Username;
    
-                    row.insertCell().innerHTML = 0;//friendsArr[i].Scores[0].current_score;
+                    row.insertCell().innerHTML = friendsArr[i].Highscore;
 
                     if (i < friendsArr.length)
                         add[i%6].style.visibility = "visible";

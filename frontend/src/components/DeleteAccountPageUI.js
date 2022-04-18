@@ -51,29 +51,23 @@ function DeleteAccountPageUI()
         }
     };
 
-    const updateAccount = async event =>
+    const deleteAccount = async event =>
     {
         var Username = ud.Username;
         var email = ud.email;
         var userID = ud.userID;
 
-        console.log(res);
 
         var obj2 = {userID:userID};
 
         var js2 = JSON.stringify(obj2);
-        console.log(obj2);
 
         try
         {
             const response2 = await fetch(bp.buildPath('api/deleteaccount'), {method:'POST', body:js2, headers:{'Content-Type': 'application/json'}}); // await fetch
 
-            console.log(response2);
-
             var res2 = JSON.parse(await response2.text()); // await response2
 
-            console.log(res2);
-            console.log(res2.error);
 
             if (res2.error !== "")
             {
@@ -97,12 +91,15 @@ function DeleteAccountPageUI()
     const doLogin = async event =>
     {
         event.preventDefault();
+
+        if(userName.value == "" || accountPassword.value == "")
+        {
+            document.getElementById("loginResult").innerHTML = "Please fill out every field";
+            return;
+        }
+
         var obj = {login:userName.value,password:md5(accountPassword.value)};
         var js = JSON.stringify(obj);
-
-        console.log(userName.value);
-        console.log(md5(accountPassword.value));
-        console.log(JSON.stringify(obj));
 
         axios({
         method: 'post',
@@ -122,16 +119,15 @@ function DeleteAccountPageUI()
             }
             else if (res) // Successful Login
             {
-                console.log(res);
                 storage.storeToken(res);
                 token = storage.retrieveToken();
 
                 //var ud = jwt_decode(token, {header:true});
                 var ud = JSON.parse(window.atob(token.split('.')[1]));
 
-                console.log(ud);
+                if(!window.confirm("Are you sure that you want to delete your account?")) return;
 
-                updateAccount();
+                deleteAccount();
             }
         })
         .catch(function (error)

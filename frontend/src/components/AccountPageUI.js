@@ -25,53 +25,9 @@ function AccountPageUI()
     var firstName = ud.firstName;
     var lastName = ud.lastName;
 
-
-
-    const viewFriends = async event => 
-    {
-        event.preventDefault();
-        var obj = {userId:userId,card:card.value};
-        var js = JSON.stringify(obj);
-        try
-        {
-            const response = await fetch(bp.buildPath('api/addcard'),
-            {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-            var txt = await response.text();
-            var res = JSON.parse(txt);
-            if( res.error.length > 0 )
-            {
-                setMessage( "API Error:" + res.error );
-            }
-            else
-            {
-                setMessage('Card has been added');
-            }
-        }
-        catch(e)
-        {
-            setMessage(e.toString());
-        }
-    };
-
-    const viewAccount = async event => 
-    {
-
-        var tok = storage.retrieveToken();
-        //var obj = {userID:userID,username:username,email:email};
-
-        var accTab = document.getElementById("accountAccBtn");
-        var passTab = document.getElementById("accountchangePassBtn");
-        var mailTab = document.getElementById("accountchangeEmailBtn");
-        var mainBoxText = document.getElementById("mainBoxContent");
-
-        passTab.style.background = "white";
-        accTab.style.background = "#E5E5E5";
-        mailTab.style.background = "white";
-
-        mainBoxText.innerHTML  = "<br />Username: " + username + " <br /><br />" +
-                "Email: "+ email +" <br /><br />" +
-                "High Score: 99999 <br /><br />";
-    };
+    var username = ud.Username;
+    var email = ud.email; 
+    var highScore = 0;
 
     const changePass = async event => 
     {
@@ -101,6 +57,39 @@ function AccountPageUI()
         mainBoxText.innerHTML  = "Here we will change email";
     };
 
+    const updateAccount = async event =>
+    {
+        var obj = {userID: ud.userID};
+        var js2 = JSON.stringify(obj);
+
+        try
+        {
+            const response = await fetch(bp.buildPath('api/displayhighscore'), {method:'POST', body:js2, headers:{'Content-Type': 'application/json'}}); // await fetch
+
+
+            var res = JSON.parse(await response.text());
+
+            highScore = res;
+
+            if (res.error !== "")
+            {
+                setMessage('Error Getting HighScore: ' + res.error);
+            }
+            else
+            {
+                setMessage('Got highScore');
+            }
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            return;
+        }
+    }
+
+    window.addEventListener('load', (event) => {
+  console.log('page is fully loaded');
+});
 
     /*
         <div id="topGrayRect">
@@ -111,23 +100,16 @@ function AccountPageUI()
         </div>
     */
 
-    var username = ud.Username;
-    var email = ud.email; 
+    
 
-/* i am so sorry for the divs, TODO CLEAN THEM UP*/
     return(
 
         <div id="AccountPageBody">
 
             <div id = "mainBoxContent">
-                <br />
-                <br />
-                <br />
-                <br />
                 Username: {username} <br /><br />
                 Email: {email} <br /><br />
-                Friends: /*TODO*/ <br /><br />
-                High Score: /*TODO*/ <br /><br />
+                High Score: {highScore} <br /><br />
             </div>
 
         </div>

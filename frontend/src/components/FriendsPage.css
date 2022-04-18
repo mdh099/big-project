@@ -75,6 +75,10 @@
 	font-size: min(3vw, 25px);
 }
 
+#usersTable{
+	text-align: center;
+}
+
 .addFriendButton, .deleteFriendButton{
 	justify-content: center;
 	display: table inline; 
