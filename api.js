@@ -257,11 +257,10 @@ exports.setApp = function(app, client){
     res.status(200).json(ret);
   });
 
-  async function setIsVerified(login){
-    console.log(login);
+  async function setIsVerified(email){
     var error = '';
 
-    const filter = { Username: login };
+    const filter = { email: email };
     const update = {IsVerified: true};
 
     // doc is the document before update was applied
@@ -282,10 +281,11 @@ exports.setApp = function(app, client){
 
     const userCode = req.body.code;
     const email = req.body.email;
-    // const Username = req.body.login; 
 
     console.log(`Code: ${userCode}`);
     console.log(`Email: ${email}`);
+
+    setIsVerified(req.body.email);
 
     // DO NOT MESS WITH
     // RE-comment this whole block of code if something stops working again. 
@@ -295,7 +295,7 @@ exports.setApp = function(app, client){
       .then(verification_check => {
           if (verification_check.status === "approved") {
             console.log("Verification succeeded");
-            setIsVerified(req.body.login); 
+            setIsVerified(req.body.email); 
 
             ret = {error: ''};
             res.status(200).json(ret);
