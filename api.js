@@ -211,26 +211,27 @@ exports.setApp = function(app, client){
 
     const newUser = {Username:login, Password:password, email:email, IsVerified: false, EmailToken: null};
 
-    // Changed catch to return an error if it gets the duplicate account message
-    try
-    {
-      const result = await User.create(newUser);
-    }
-    catch(e)
-    {
-      error = e.toString();
-      // console.log(error);
-    }
-
+    // Checks if provided email is already used in an account. 
     //--------------------------------------------------
-    // const emailResults = await User.findOne({ email: email});
+    const emailResults = await User.findOne({ email: email}); 
 
-    // if(emailResults){
-    //   console.log("email results found"); 
-    // } else if(!emailResults){
-    //   console.log("NO EMAIL FOUND");
-    // }
+    if(emailResults){
+      error = "Email in use"; 
+    }
     //------------------------------------------------------
+
+    if(!error){
+      // Changed catch to return an error if it gets the duplicate account message
+      try
+      {
+        const result = await User.create(newUser);
+      }
+      catch(e)
+      {
+        error = e.toString();
+        console.log(error);
+      }
+    }
 
     if(!error){
       console.log("Will now create verification code");
