@@ -222,6 +222,16 @@ exports.setApp = function(app, client){
       // console.log(error);
     }
 
+    //--------------------------------------------------
+    // const emailResults = await User.findOne({ email: email});
+
+    // if(emailResults){
+    //   console.log("email results found"); 
+    // } else if(!emailResults){
+    //   console.log("NO EMAIL FOUND");
+    // }
+    //------------------------------------------------------
+
     if(!error){
       console.log("Will now create verification code");
       // Create the verification code
@@ -271,7 +281,7 @@ exports.setApp = function(app, client){
 
     const userCode = req.body.code;
     const email = req.body.email;
-    const Username = req.body.login; 
+    // const Username = req.body.login; 
 
     console.log(`Code: ${userCode}`);
     console.log(`Email: ${email}`);
