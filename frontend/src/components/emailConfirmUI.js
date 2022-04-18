@@ -65,7 +65,7 @@ function Login()
     {
 
         event.preventDefault();
-        var obj = {code:Code.value, email:Email.value, login: Name.value};
+        var obj = {code:Code.value, email:Email.value};
 
         var js = JSON.stringify(obj);
         try
@@ -74,14 +74,14 @@ function Login()
 
             var res = JSON.parse(await response.text());
 
-            if( res.error !== "" || obj.login == "" || obj.password == "" || obj.email == "")
+            if( res.error !== "" || obj.code == "" || obj.password == "" || obj.email == "")
             {
-                if (obj.login == "" || obj.password == "" || obj.email == "")
+                if (obj.code == "" || obj.password == "" || obj.email == "")
                 {
                     setMessage('Please Fill out All Fields');
                 }
                 else 
-                    setMessage('Username Already In Use');
+                    setMessage('Error: ' + res.error);
             }
             else
             {
@@ -97,35 +97,44 @@ function Login()
 
     };
 
-    const resendCode = async event => 
-    {
-        event.preventDefault();
-        var obj = {login:Name.value, email: Email.value};
+//     const resendCode = async event =>
+//     {
+//         event.preventDefault();
+//         var obj = {login:Name.value, email: Email.value};
+//
+//         var js = JSON.stringify(obj);
+//         try
+//         {
+//             const response = await fetch(buildPath('api/registration'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+//
+//             var res = JSON.parse(await response.text());
+//
+//             if (obj.login == "" || obj.email == "" || )
+//             {
+//                 setMessage('Please Fill out All Fields');
+//             }
+//
+//             else
+//             {
+//                 setMessage('');
+//                 window.location.href = '/emailConfirm';
+//             }
+//         }
+//         catch(e)
+//         {
+//             console.log(e.toString());
+//             return;
+//         }
+//     };
 
-        var js = JSON.stringify(obj);
-        try
-        {    
-            const response = await fetch(buildPath('api/registration'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+//             <div class="verifyEmailBtnDiv">
+//               <button id="resendCodeBtn" type="button" onClick={resendCode}>Resend Code</button>
+//             </div>
 
-            var res = JSON.parse(await response.text());
-
-            if (obj.login == "" || obj.email == "")
-            {
-                setMessage('Please Fill out All Fields');
-            }
-
-            else
-            {
-                setMessage('');
-                window.location.href = '/emailConfirm';
-            }
-        }
-        catch(e)
-        {
-            console.log(e.toString());
-            return;
-        }    
-    };
+//                 <div class="emailNameDiv">
+//                 <input type="input" id="codeInput"  placeholder="Enter Username"
+//                     ref={(c) => Name = c} />
+//              </div>
 
     return(
       <div id="emailConfirmDiv">
@@ -135,17 +144,14 @@ function Login()
         </div>
 
         <form id="emailVerifyForm">
-
-            <div class="emailNameDiv">
-                <input type="input" id="codeInput"  placeholder="Enter Username" 
-                    ref={(c) => Name = c} />
-             </div>
             
              <div class="emailMailDiv">
                 <input type="input" id="codeInput"  placeholder="Enter Email" 
                     ref={(c) => Email = c} />
              </div>
              
+             <br/>
+
              <div class="emailCodeDiv">
                 <input type="input" id="codeInput"  placeholder="Enter Code" 
                     ref={(c) => Code = c} />
@@ -168,9 +174,6 @@ function Login()
               <button id="goToLoginBtn" type="button" onClick={goToLogin}> Go to Login</button>
             </div>
 
-            <div class="verifyEmailBtnDiv">
-              <button id="resendCodeBtn" type="button" onClick={resendCode}>Resend Code</button>
-            </div>
         </div>
         
      </div>
