@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class TestDatAPI : MonoBehaviour
 {
-    Login test;
+    //Login test;
     void Start()
     {
-        test = gameObject.transform.Find("LoginTest").GetComponent<Login>();
-
-        test.addScore();
+        //test = gameObject.transform.Find("LoginTest").GetComponent<Login>();
     }
 }

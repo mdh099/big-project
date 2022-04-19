@@ -12,6 +12,8 @@ TagManager:
   - API
   - User
   - Pass
+  - Login
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -21,6 +21,8 @@ public class changeScene : MonoBehaviour
 
     public void goToGameScene()
     {
+        Login.UserInfo ui = new Login.UserInfo();
+
         string username = GameObject.FindGameObjectWithTag("User").GetComponent<Text>().text;
         string password = GameObject.FindGameObjectWithTag("Pass").GetComponent<Text>().text;
         Login login = GameObject.FindGameObjectWithTag("Login").GetComponent<Login>();
@@ -28,9 +30,19 @@ public class changeScene : MonoBehaviour
         Debug.Log("CLICKED!");
         Debug.Log(username + " " + password);
 
-        login.DoLogin(username, password);
+        ui = login.DoLogin(username, password);
 
-        //SceneManager.LoadScene("SampleScene");
-        Debug.Log("CHANGED SCENE!");
+        if (ui.error.Length == 0)
+        {
+            PlayerPrefs.SetInt("userID", ui.userID);
+            PlayerPrefs.SetString("username", username);
+            SceneManager.LoadScene("SampleScene");
+        }
+        else
+        {
+            Debug.Log(ui.error);
+        }
+
+
     }
 }

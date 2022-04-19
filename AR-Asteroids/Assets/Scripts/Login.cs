@@ -103,13 +103,13 @@ public class Login : MonoBehaviour
         //ErrorHandler.ErrorMessage(6, ui.Error, 1); // Removed because you cant send an error through the network when there is no network to send it through
 
 
-    public ScoreError addScore()
+    public ScoreError addScore(int userID, int score, string username)
     {
         StoreScore ss = new StoreScore();
 
-        ss.userID = 206;
-        ss.username = "Radir";
-        ss.score = 420;
+        ss.userID = userID;
+        ss.username = username;
+        ss.score = score;
 
         //I think we put the website API here?
         string strURL = String.Format("https://cop4331-123.herokuapp.com/api/addscore");

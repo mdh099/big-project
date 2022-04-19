@@ -37,6 +37,16 @@ public class Player : MonoBehaviour
         {
             Destroy(other);
             Debug.Log("Astroid collided with player and triggered death");
+
+            int userID = PlayerPrefs.GetInt("userID");
+            string username = PlayerPrefs.GetString("username");
+            int score = GameObject.FindGameObjectWithTag("UI").GetComponent<UIStuff>().score;
+
+            Login getScore = GameObject.FindGameObjectWithTag("Login").GetComponent<Login>();
+            getScore.addScore(userID, score, username);
+
+
+
             SceneManager.LoadScene("GameOverScene");
         }
     }
