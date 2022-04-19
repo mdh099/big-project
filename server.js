@@ -4,9 +4,6 @@ const cors = require('cors');
 
 const app = express();
 
-//app.use(express.json());
-//app.use(express.urlencoded());
-
 const PORT = process.env.PORT || 5000; 
 app.set('port', (process.env.PORT || 5000));
 
@@ -15,8 +12,6 @@ const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
-//const MongoClient = require('mongodb').MongoClient;
-//const url = 'mongodb+srv://jm:cop4331@cluster0.k1bed.mongodb.net/COP4331?retryWrites=true&w=majority';
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const mongoose = require("mongoose");
@@ -50,7 +45,6 @@ app.use((req, res, next) =>
   );
   next();
 });
-//app.listen(5000); // start Node + Express server on port 5000
 
 app.listen(PORT, () => 
 {

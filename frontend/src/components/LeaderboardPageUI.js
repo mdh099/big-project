@@ -111,7 +111,7 @@ function LeaderboardPageUI()
     const showAllLeaderboard = async event => 
     {
 
-        event.preventDefault();
+        //event.preventDefault();
 
         var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
@@ -178,6 +178,11 @@ function LeaderboardPageUI()
             return;
         }    
     };
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log("LOADED");
+        showAllLeaderboard();
+    });
 
     return(
 

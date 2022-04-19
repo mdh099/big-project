@@ -122,7 +122,6 @@ function DeleteAccountPageUI()
                 storage.storeToken(res);
                 token = storage.retrieveToken();
 
-                //var ud = jwt_decode(token, {header:true});
                 var ud = JSON.parse(window.atob(token.split('.')[1]));
 
                 if(!window.confirm("Are you sure that you want to delete your account?")) return;

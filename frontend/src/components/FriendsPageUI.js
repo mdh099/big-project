@@ -93,7 +93,7 @@ function FriendsPageUI()
     const searchCurrentFriends = async event => 
     {
 
-        event.preventDefault();
+        //event.preventDefault();
 
         var obj = {userID: ud.userID, jwtToken: storage.retrieveToken()};
         var js = JSON.stringify(obj);
@@ -532,6 +532,10 @@ function FriendsPageUI()
     // CODE BELOW TO BE ADDED IF WE EVER IMPLEMENT A SEARCH FOR SPECIFIC FRIEND
     // <input type="text" id="usrSearchBar" placeholder="Search" ref={(c) => SearchingName = c} />
     //searchInput.addEventListener('keyup',function(){searchCurrentFriends();});
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        searchCurrentFriends();
+    });
 
     return(
 

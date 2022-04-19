@@ -105,41 +105,6 @@ function Login()
             setMessage('Critical Error: ' + error);
         });
 
-//         try
-//         {
-//             console.log("here1");
-//             const response = await fetch(bp.buildPath('api/login'),
-//                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-//             var res = JSON.parse(await response.text());
-//
-//             console.log(res);
-//             //---------------------------------------------------------------------------
-//             if(res.userID <= 0 || !res.IsVerified)
-//             {
-//                 setMessage('Login Failed -- Is your account verified? Check your email!');
-//             }
-//             else
-//             {                                             // Changed res.id to res.userID
-//                 storage.storeToken(res); // JWT
-//
-//                 let userID = res.userID;
-//                 let Username = res.Username;
-//                 let email = res.email;
-//
-//                 var user = {username:res.Username,id:res.userID, email:res.email}
-//                 // added next line for testing
-//                 console.log(user);
-//                 localStorage.setItem('user_data', JSON.stringify(user));
-//                 setMessage('');
-//                 window.location.href = '/account';
-//             }
-//             //------------------------------------------------------------------------
-//         }
-//         catch(e)
-//         {
-//             console.log(e.toString());
-//             return;
-//         }
     };
 
     return(
