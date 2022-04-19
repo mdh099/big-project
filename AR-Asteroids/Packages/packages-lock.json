@@ -219,6 +219,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "io.realm.unity": {
+      "version": "file:../io.realm.unity-10.11.1.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

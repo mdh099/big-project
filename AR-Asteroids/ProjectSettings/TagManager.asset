@@ -9,6 +9,9 @@ TagManager:
   - AsteroidMed
   - AsteroidSmall
   - AsteroidTemplates
+  - API
+  - User
+  - Pass
   layers:
   - Default
   - TransparentFX

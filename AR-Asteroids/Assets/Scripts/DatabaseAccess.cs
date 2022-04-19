@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+
 public class DatabaseAccess : MonoBehaviour
 {
     /*
@@ -12,7 +13,9 @@ public class DatabaseAccess : MonoBehaviour
     IMongoDatabase database;
     IMongoCollection<BsonDocument> collection;
 
-
+    int testScore = 420;
+    string userName = "Radir";
+    string password = "7f943921724d63dc0ac9c6febf99fa88";
 
 
     // Start is called before the first frame update
@@ -22,9 +25,13 @@ public class DatabaseAccess : MonoBehaviour
         collection = database.GetCollection<BsonDocument>("NameOfThing");
 
         //temp for testing Watch 13:50
-        //GetScoresFromDataBase();
+        GetScoresFromDataBase();
     }
 
+    public async void testLogin(string userName, string password)
+    {
+        var 
+    }
 
     public async void SaveScoreToDataBase(string userName, int score)
     {
@@ -61,5 +68,4 @@ public class HighScore
 {
     public string UserName { get; set; }
     public int Score { get; set; }
-}
-*/
+}*/
