@@ -128,3 +128,10 @@ a{
 button{
 	cursor: pointer;
 }
+
+#btnToRevealScore{
+	display: inline;
+	font-size: 30px;
+	font-family: 'KoHo';
+	color: rgba(255, 255, 255, 0.69);
+}
