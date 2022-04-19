@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fdc114b1ed7ab44a92ff872da714b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: 
 --- !u!114 &22732928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22732919}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4a8046c967cb89468940420623f624b, type: 3}
   m_Name: 
@@ -346,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -85, y: -26}
+  m_AnchoredPosition: {x: -160.4, y: -52.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49804330
@@ -632,7 +633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 92, y: -57}
+  m_AnchoredPosition: {x: 158.8, y: -82.7}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &350110432
@@ -890,6 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fdc114b1ed7ab44a92ff872da714b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: 
 --- !u!1 &438784154
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 85, y: -20}
+  m_AnchoredPosition: {x: 154.59998, y: -52.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438784156
@@ -1123,6 +1125,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &722641725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2613681003431459299, guid: 9f2e092b93d308e49a3298c1a55093f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4704276765667829362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &722641728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722641725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a8046c967cb89468940420623f624b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boltPrefab: {fileID: 5519027324383208223, guid: 8d390cc5232b68f47aff62214f7a096e,
+    type: 3}
+  boltSpawn: {fileID: 304721843}
+  speed: 10
+  boltLifeTime: 15
 --- !u!1 &1294506823
 GameObject:
   m_ObjectHideFlags: 0

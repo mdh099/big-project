@@ -43,6 +43,10 @@ public class UIStuff : MonoBehaviour
         score += amount;
         scoreText.text = "SCORE: " + score.ToString();
         if (highscore < score)
+        {
+            // player got new highScore, we change prev highScore
             PlayerPrefs.SetInt("highscore", score);
+        }
+            
     }
 }
