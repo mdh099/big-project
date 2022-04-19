@@ -36,7 +36,7 @@ public class changeScene : MonoBehaviour
         {
             PlayerPrefs.SetInt("userID", ui.userID);
             PlayerPrefs.SetString("username", username);
-            SceneManager.LoadScene("SampleScene");
+            goToActualGame();
         }
         else
         {
@@ -44,5 +44,10 @@ public class changeScene : MonoBehaviour
         }
 
 
+    }
+
+    public void goToActualGame()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 }
