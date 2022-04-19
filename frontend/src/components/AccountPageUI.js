@@ -29,6 +29,47 @@ function AccountPageUI()
     var email = ud.email; 
     var highScore = 0;
 
+
+
+   /*
+    state = {
+        pollingCount: 0,
+        delay: 3000
+    }
+
+    componentDidMount()
+    {
+        this.interval = setInterval (this.tick, this.state.delay);
+    }
+
+    componentDidUpdate(prevProps, prevState)
+    {
+        if (prevState.delay != this.state.delay)
+        {
+            clearInterval(this.interval);
+            this.interval = setInterval(this.tick, this.state.delay);
+        }
+    }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.interval);
+    }
+
+    tick = () => {
+        this.setState({
+            pollingCount: this.state.pollingCount+1
+        });
+    }
+
+    render() 
+    {
+        return this.state.pollingCount;
+    }
+   */
+
+
+
     const changePass = async event => 
     {
         var accTab = document.getElementById("accountAccBtn");
@@ -69,7 +110,12 @@ function AccountPageUI()
 
             var res = JSON.parse(await response.text());
 
-            highScore = res;
+            highScore = res.highscore;
+
+            console.log("Score is "+ highScore);
+            console.log(highScore);
+
+            document.getElementById("btnToRevealScore").innerHTML= highScore;
 
             if (res.error !== "")
             {
@@ -87,9 +133,10 @@ function AccountPageUI()
         }
     }
 
-    window.addEventListener('load', (event) => {
-  console.log('page is fully loaded');
-});
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        updateAccount();
+    });
 
     /*
         <div id="topGrayRect">
@@ -100,16 +147,19 @@ function AccountPageUI()
         </div>
     */
 
+    //highScore = updateAccount();
     
 
     return(
 
         <div id="AccountPageBody">
 
+            
+
             <div id = "mainBoxContent">
                 Username: {username} <br /><br />
                 Email: {email} <br /><br />
-                High Score: {highScore} <br /><br />
+                High Score: <a id="btnToRevealScore" onClick= {updateAccount}>  </ a> <br /><br />
             </div>
 
         </div>

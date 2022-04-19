@@ -61,31 +61,24 @@
 	left: 50.5%;
 }
 
-#DivWithTable, #usersTable{
-	justify-content: center;
-	display: table inline; 
-    align-items: flex-start; 
-	height: 6%;
-	width: 80%;
-	top: 40%;
-	left: 10%;
-	position: absolute;
-	margin: auto;
-	color: white;
-	font-size: min(3vw, 25px);
-}
-
-#usersTable{
-	text-align: center;
-}
-
 .addFriendButton, .deleteFriendButton{
 	justify-content: center;
 	display: table inline; 
     align-items: flex-start; 
 	height: 0px;
 	width: 80%;
-	top: 46%;
+	
+	/* Firefox */
+top: -moz-calc(40% + 1000px);
+/* WebKit */
+top: -webkit-calc(40% + 30px);
+/* Opera */
+top: -o-calc(40% + 30px);
+/* Standard */
+top: calc(42% + 30px);
+
+
+
 	left: 6%;
 	position: absolute;
 	margin: auto;
@@ -99,7 +92,7 @@
     overflow: none;
     outline: none;
 	width: fit-content;
-	height: 5%;
+	height: 30px;
 	vertical-align: inherit;
 	font-size: 6%;
 	padding: 0;
@@ -111,7 +104,7 @@
 	padding-left: 2.5%;
 	padding-right: 0%;
 
-	height: fit-content;
+	height: 30px;
 	line-height: 100%;
 	box-shadow: none;
 	margin:auto;
@@ -123,25 +116,53 @@
 
 #plus2{
 	top: 50.2%;
+
+	top: calc(42% + 60px);
 }
 
 #plus3{
 	top: 54.4%;
+
+	top: calc(42% + 95px);
 }
 
 #plus4{
 	top: 58.6%;
+	top: calc(42% + 125px);
 }
 
 #plus5{
 	top: 62.8%;
-}
-#plus6{
-	top: 67%;
+
+	top: calc(42% + 157px);
 }
 
-#friendsPageBody{
-	background: pink;
+#plus6{
+	top: 67%;
+
+	top: calc(42% + 190px);
+}
+
+#DivWithTable, #usersTable{
+	justify-content: center;
+	display: table inline; 
+    align-items: flex-start; 
+	height: 6%;
+	width: 80%;
+	top: 40%;
+	left: 10%;
+	position: absolute;
+	margin: auto;
+	color: white;
+	font-size: 25px;
+}
+
+#usersTable{
+	text-align: center;
+}
+
+tr{
+	height: 30px;
 }
 
 table, th, td{
