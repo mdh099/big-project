@@ -10,6 +10,7 @@ const User = require("./models/user.js");
 const Score = require("./models/score.js");
 const Reset = require("./models/reset.js");
 const sgMail = require('@sendgrid/mail');
+const { useRouteMatch } = require('react-router-dom');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -199,6 +200,41 @@ exports.setApp = function(app, client){
     } 
   });
 
+  // Game Login
+  // incoming: login, password
+  // outgoing: userID, username, error
+  app.post('/api/gamelogin', async function(req, res, next)
+  {
+    var error = '';
+
+    const { login, password } = req.body;
+
+    const results = await User.findOne({ Username: login, Password: password });
+
+    var userID = -1;
+    var username = "";
+    var error = "";
+
+    if(results)
+    {
+      if(results.IsVerified)
+      {
+        userID = results.userID;
+        username = results.Username;
+      }
+      else{
+        error = "Account is not verified.";
+      }
+    }
+    else
+    {
+      error = "Login/Password Incorrect";
+    }
+
+    var ret = { userID:userID, username:username, error:error};
+    res.status(200).json(ret);
+  });
+  
   // Registration
   // Change so, it returns an error if that username already exists
   // incoming: Username, Password, email, 
